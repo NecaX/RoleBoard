@@ -1,0 +1,12 @@
+{
+  "name": "test1",
+  "version": "0.1.0",
+  "description": "first electron app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^5.0.6"
+  }
+}
