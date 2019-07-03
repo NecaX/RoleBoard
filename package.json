@@ -1,12 +1,11 @@
 {
-  "name": "test1",
-  "version": "0.1.0",
-  "description": "first electron app",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  },
-  "devDependencies": {
-    "electron": "^5.0.6"
-  }
+    "name": "roleboard",
+    "version": "0.0.1",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^5.0.6"
+    }
 }
