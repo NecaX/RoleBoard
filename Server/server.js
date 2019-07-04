@@ -1,10 +1,10 @@
-var express = require('express');
-var app = express();
-
-app.get('/', function(req, res) {
-  res.send('Hola Mundo!');
-});
-
-app.listen(3000, function() {
-  console.log('Aplicación ejemplo, escuchando el puerto 3000!');
-});
+const WebSocket = require('ws')
+ 
+const wss = new WebSocket.Server({ port: 8080 })
+ 
+wss.on('connection', ws => {
+  ws.on('message', message => {
+    console.log(`Received message => ${message}`)
+  })
+  ws.send('Hello! Message From Server!!')
+})
