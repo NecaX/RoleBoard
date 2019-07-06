@@ -24,10 +24,9 @@ const wss = new WebSocket.Server({ port: 8080 })
 wss.on('connection', ws => {
   ws.on('message', message => {
     console.log(`Received message => ${message}`)
+    wss.clients.forEach(function each(client) {
+      client.send(message);
+    });
   })
-  function intervalFunc() {
-    ws.send('Hello! Message From Server!!')
-    console.log("Message")
-  }
-  setInterval(intervalFunc, 1500);
+
 })
