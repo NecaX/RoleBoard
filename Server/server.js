@@ -24,6 +24,10 @@ const wss = new WebSocket.Server({ port: 8080 })
 wss.on('connection', ws => {
   ws.on('message', message => {
     console.log(`Received message => ${message}`)
+    // En cada mensaje recibido (en este caso coordenadas XY) se las reenvia
+    // a todos aquellos clientes que esten conectados al servidor
+
+    //En esta funcion, en un futuro, se parsean los mensajes, se controlan los turnos, etc
     wss.clients.forEach(function each(client) {
       client.send(message);
     });
