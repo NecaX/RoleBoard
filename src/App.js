@@ -39,8 +39,8 @@ class App extends React.Component {
       console.log(error)
     }
     
-    // Cada vez que llega un mensaje nuevo (aka coordenadas nuevas)
-    // se actualizan donde sea necesario
+    // Cada vez que llega un mensaje nuevo
+    // se procesa dependiendo del tipo
     connection.onmessage = (e) => {
       console.log(e.data)
       this.processMessage(e.data)
@@ -49,7 +49,7 @@ class App extends React.Component {
 
   /**
    * Funcion que controla el envio del formulario. Manda un mensaje con formato
-   * {'type': 'updateCoordinates', 'data': {'x': num, 'y': num}} al servidor con las nuevas coordenadas
+   * {'type': 'updateCoordinates', 'data': {'id: num, 'x': num, 'y': num}} al servidor con las nuevas coordenadas
    */
   sendCoordinates(){
     var data = {'id': this.state.playerId, 'x': this.state.x, 'y': this.state.y};
@@ -67,7 +67,7 @@ class App extends React.Component {
   }
 
   /**
-   * Funcion que controla el cambio del estado de X en el formulario. 
+   * Funcion que controla el cambio del estado de Y en el formulario. 
    * Tiene actualizado this.state.y en todo momento
    * @param {*} event Evento generado por el cambio provocado por el formulario
    */
@@ -117,7 +117,7 @@ class App extends React.Component {
 
   /**
    * Funcion que actualiza las coordenadas de cada jugador.
-   * Recibe un mensaje JSON del formato {id: xxx, x: xxx, y:xxx}
+   * Recibe un mensaje JSON del formato {'id': xxx, 'x': xxx, 'y':xxx}
    * @param {JSON} data Objeto con las nuevas coordenadas del jugador correspondiente
    */
   updateCoordinates(data){
@@ -178,14 +178,8 @@ class App extends React.Component {
             </div>
 
           </form>
-          <button onClick={this.sendCoordinates}>Botonazo</button>
+          <button onClick={this.sendCoordinates}>Send coordinates</button>
 
-          <div>
-            Received X value: {this.state.recvX}
-          </div>
-          <div>
-            Received Y value: {this.state.recvY}
-          </div>
           <div>
             I'm player: {this.state.playerId}
           <table>
