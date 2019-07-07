@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props); //Constructor padre
 
     //Los binding permiten usar las funciones en el constructor
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.sendCoordinates = this.sendCoordinates.bind(this);
     this.handleChangeX = this.handleChangeX.bind(this);
     this.handleChangeY = this.handleChangeY.bind(this);
 
@@ -24,6 +24,8 @@ class App extends React.Component {
       y: 0, // Coordenada Y del formulario a enviar
       recvX: 0, // Coordenada X recibida del servidor
       recvY: 0, // Coordenada Y recibida del servidor
+      playerId: '', //ID del jugador, entregado y generado por el servidor
+      players: [], // Lista de jugadores activos
     }
 
     // Funcion vacia por si es necesario en un futuro
@@ -41,15 +43,18 @@ class App extends React.Component {
     // se actualizan donde sea necesario
     connection.onmessage = (e) => {
       console.log(e.data)
-      this.updateCoordinates(e.data)
+      this.processMessage(e.data)
     }
   }
+
   /**
    * Funcion que controla el envio del formulario. Manda un mensaje con formato
-   * "X: num Y: num" al servidor con las nuevas coordenadas
+   * {'type': 'updateCoordinates', 'data': {'x': num, 'y': num}} al servidor con las nuevas coordenadas
    */
-  handleSubmit(){
-    connection.send('X: ' + this.state.x + ' Y: ' + this.state.y) 
+  sendCoordinates(){
+    var data = {'x': this.state.x, 'y': this.state.y};
+    var message = {'type': 'updateCoordinates', 'data': data};
+    connection.send(JSON.stringify(message)) 
   }
 
   /**
@@ -71,18 +76,70 @@ class App extends React.Component {
   }
 
   /**
+   * Funcion que procesa los mensajes recibidos del server.
+   * Los mensajes son JSON del formato {'type': xxx, 'data': xxx}
+   * @param {String} data String que contiene el mensaje a procesar
+   */
+  processMessage(data){
+    var obj = JSON.parse(data)
+    if(obj['type'] === 'init'){
+      this.initializePlayer(obj['data'])
+    }
+    if(obj['type'] === 'updatePlayers'){
+      this.updatePlayers(obj['data'])
+    }
+    if(obj['type'] === 'updateCoordinates'){
+      this.updateCoordinates(obj['data'])
+    }    
+  }
+
+  /**
+   * Funcion que controla la inicializacion del jugador
+   * Guarda el ID unico del jugador, y la lista de jugadores activos
+   * @param {JSON} data Contiene el id unico y la lista de jugadores
+   */
+  initializePlayer(data){
+    this.setState({
+      playerId: data['id'],
+      players: data['players'] 
+    })
+  }
+
+  /**
+   * Funcion que actualiza la lista de jugadores activos
+   * @param {JSON} data Contiene la lista de jugadores activos
+   */
+  updatePlayers(data){
+    this.setState({
+      players: data['players'] 
+    })
+  }
+
+  /**
    * Funcion que actualiza las coordenadas.
    * Recibe un mensaje string del formato "X: num Y: num" que trata para conservar solo los numeros
    * @param {String} data String que contiene el mensaje con las coordenadas
    */
   updateCoordinates(data){
     this.setState({
-      recvX: data.split('Y:')[0].substring(3),
-      recvY: data.split('Y:')[1]
-
+      recvX: data['x'],
+      recvY: data['y']
     })
   }
-  
+
+/**
+ * Funcion que controla la creacion de filas de la tabla de manera dinamica
+ * con la lista de jugadores activos.
+ */
+renderPlayersData(){
+  return this.state.players.map((player, index) => {
+    return(
+      <tr >
+        <td>Player {player}</td>
+      </tr>
+    )
+  })
+}
 
 render(){
   return (
@@ -105,13 +162,22 @@ render(){
           </div>
 
         </form>
-        <button onClick={this.handleSubmit}>Botonazo</button>
+        <button onClick={this.sendCoordinates}>Botonazo</button>
 
         <div>
           Received X value: {this.state.recvX}
         </div>
         <div>
           Received Y value: {this.state.recvY}
+        </div>
+        <div>
+          I'm player: {this.state.playerId}
+        <table>
+            Players:
+            <tbody>
+              {this.renderPlayersData()}
+            </tbody>
+        </table>
         </div>
       </header>
     </div>
