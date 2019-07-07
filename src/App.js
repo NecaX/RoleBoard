@@ -52,7 +52,7 @@ class App extends React.Component {
    * {'type': 'updateCoordinates', 'data': {'x': num, 'y': num}} al servidor con las nuevas coordenadas
    */
   sendCoordinates(){
-    var data = {'x': this.state.x, 'y': this.state.y};
+    var data = {'id': this.state.playerId, 'x': this.state.x, 'y': this.state.y};
     var message = {'type': 'updateCoordinates', 'data': data};
     connection.send(JSON.stringify(message)) 
   }
@@ -116,73 +116,89 @@ class App extends React.Component {
   }
 
   /**
-   * Funcion que actualiza las coordenadas.
-   * Recibe un mensaje string del formato "X: num Y: num" que trata para conservar solo los numeros
-   * @param {String} data String que contiene el mensaje con las coordenadas
+   * Funcion que actualiza las coordenadas de cada jugador.
+   * Recibe un mensaje JSON del formato {id: xxx, x: xxx, y:xxx}
+   * @param {JSON} data Objeto con las nuevas coordenadas del jugador correspondiente
    */
   updateCoordinates(data){
+    var newPlayers = this.state.players
+    var id = data['id']
+
+    newPlayers.forEach((elem) => {
+      console.log(elem['id'])
+      console.log(id)
+      if (elem['id'] === id){
+        elem['x'] = data['x']
+        elem['y'] = data['y']
+      }
+    })
+
     this.setState({
       recvX: data['x'],
-      recvY: data['y']
+      recvY: data['y'],
+      players: newPlayers,
     })
   }
 
-/**
- * Funcion que controla la creacion de filas de la tabla de manera dinamica
- * con la lista de jugadores activos.
- */
-renderPlayersData(){
-  return this.state.players.map((player, index) => {
-    return(
-      <tr >
-        <td>Player {player}</td>
-      </tr>
+  /**
+   * Funcion que controla la creacion de filas de la tabla de manera dinamica
+   * con la lista de jugadores activos.
+   */
+  renderPlayersData(){
+    console.log('Render: ' + this.state.players)
+    return this.state.players.map((player, index) => {
+      return(
+        <tr >
+          <td>Player {player['id']}</td>
+          <td>X: {player['x']}</td>
+          <td>Y: {player['y']}</td>
+        </tr>
+      )
+    })
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <form>
+            <div>
+            <label>
+              X:
+              <input type="text" value={this.state.x} onChange={this.handleChangeX}/>
+            </label>
+            </div>
+
+            <div>
+            <label>
+              Y:
+              <input type="text" value={this.state.y} onChange={this.handleChangeY}/>
+            </label>
+            </div>
+
+          </form>
+          <button onClick={this.sendCoordinates}>Botonazo</button>
+
+          <div>
+            Received X value: {this.state.recvX}
+          </div>
+          <div>
+            Received Y value: {this.state.recvY}
+          </div>
+          <div>
+            I'm player: {this.state.playerId}
+          <table>
+              Players:
+              <tbody>
+                {this.renderPlayersData()}
+              </tbody>
+          </table>
+          </div>
+        </header>
+      </div>
     )
-  })
-}
-
-render(){
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <form>
-          <div>
-          <label>
-            X:
-            <input type="text" value={this.state.x} onChange={this.handleChangeX}/>
-          </label>
-          </div>
-
-          <div>
-          <label>
-            Y:
-            <input type="text" value={this.state.y} onChange={this.handleChangeY}/>
-          </label>
-          </div>
-
-        </form>
-        <button onClick={this.sendCoordinates}>Botonazo</button>
-
-        <div>
-          Received X value: {this.state.recvX}
-        </div>
-        <div>
-          Received Y value: {this.state.recvY}
-        </div>
-        <div>
-          I'm player: {this.state.playerId}
-        <table>
-            Players:
-            <tbody>
-              {this.renderPlayersData()}
-            </tbody>
-        </table>
-        </div>
-      </header>
-    </div>
-  )
-}
+  }
 }
 
 export default App;

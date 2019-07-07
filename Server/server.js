@@ -2,7 +2,7 @@ const WebSocket = require('ws')
 const wss = new WebSocket.Server({ port: 8080 })
 
 var idGen = 0 // Contador estatico de IDs a asignar
- 
+
 wss.on('connection', (ws, req) => {
 
   initializePlayer(ws, wss);
@@ -12,6 +12,9 @@ wss.on('connection', (ws, req) => {
     var obj = JSON.parse(message)
     // Dependiendo del tipo de mensaje recibido, se realiza una accion u otra
     if(obj['type'] == 'updateCoordinates'){
+      // Actualiza las coordenadas del objeto en el servidor
+      ws.x = obj['data']['x']
+      ws.y = obj['data']['y']
       sendNewCoordinates(wss, message);
     }
   })
@@ -40,9 +43,12 @@ wss.on('connection', (ws, req) => {
   function initializePlayer(ws, wss) {
     idGen++;
     ws.id = idGen;
+    // Inicializa las coordenadas en el servidor a 0
+    ws.x = 0;
+    ws.y = 0;
     var players = []
     wss.clients.forEach(function each(client) {
-      players.push(client.id)
+      players.push({'id': client.id, 'x': client.x, 'y': client.y})
     });
     var data = {'id': idGen, 'players': players};
     var message = {'type': 'init', 'data': data};
@@ -57,7 +63,7 @@ wss.on('connection', (ws, req) => {
     var players = []
 
     wss.clients.forEach(function each(client) {
-      players.push(client.id)
+      players.push({'id': client.id, 'x': client.x, 'y': client.y})
     });
 
     var data = {'players': players};
