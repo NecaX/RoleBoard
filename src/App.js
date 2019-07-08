@@ -4,7 +4,7 @@ import './App.css';
 
 
 //Punto de entrada para el websocket
-const url = 'ws://localhost:8080'
+const url = 'ws://localhost:8080' //Cambiar a url dinámica
 const connection = new WebSocket(url)
 
 class App extends React.Component {  
