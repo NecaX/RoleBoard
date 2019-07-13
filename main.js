@@ -17,7 +17,7 @@ function createWindow () {
   })
 
   // Remove Menu bar
-  mainWindow.removeMenu();
+  // mainWindow.removeMenu();
 
   // and load the index.html of the app.
   mainWindow.loadURL('http://localhost:3000/')

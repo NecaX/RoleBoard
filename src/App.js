@@ -1,12 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Link } from "react-router-dom";
 
-
-//Punto de entrada para el websocket
-const url = 'ws://localhost:8080' //Cambiar a url dinámica
-const connection = new WebSocket(url)
-
+var connection
 class App extends React.Component {  
   constructor(props){
     super(props); //Constructor padre
@@ -22,16 +19,28 @@ class App extends React.Component {
     this.state = {
       x: 0, // Coordenada X del formulario a enviar
       y: 0, // Coordenada Y del formulario a enviar
-      recvX: 0, // Coordenada X recibida del servidor
-      recvY: 0, // Coordenada Y recibida del servidor
       playerId: '', //ID del jugador, entregado y generado por el servidor
       players: [], // Lista de jugadores activos
+      server: 'localhost', // Servidor donde se conecta 
+      username: 'default', // Nombre de usuario
     }
 
+  }
+
+  componentDidMount(){
+    this.setState({
+      server: this.props.match.params.server,
+      username: this.props.match.params.username
+    });
+    //Punto de entrada para el websocket
+    const url = 'ws://'+this.props.match.params.server+':8080' //Cambiar a url dinámica
+    console.log(url)
+    connection = new WebSocket(url)
+
     // Funcion vacia por si es necesario en un futuro
-    connection.onopen = () => {
-      //connection.send('Message From Client') 
-    }
+    // connection.onopen = () => {
+    //   //connection.send('Message From Client') 
+    // }
     
     // Error log
     connection.onerror = (error) => {
@@ -157,6 +166,8 @@ class App extends React.Component {
     })
   }
 
+  
+
   render(){
     return (
       <div className="App">
@@ -179,7 +190,9 @@ class App extends React.Component {
 
           </form>
           <button onClick={this.sendCoordinates}>Send coordinates</button>
-
+          <Link to="/">       
+            <button>Login</button>
+          </Link>
           <div>
             I'm player: {this.state.playerId}
           <table>
