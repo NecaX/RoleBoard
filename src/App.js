@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Link } from "react-router-dom";
+import GameBoard from './GameBoard';
 
 var connection
 class App extends React.Component {  
@@ -10,15 +9,13 @@ class App extends React.Component {
 
     //Los binding permiten usar las funciones en el constructor
     this.sendCoordinates = this.sendCoordinates.bind(this);
-    this.handleChangeX = this.handleChangeX.bind(this);
-    this.handleChangeY = this.handleChangeY.bind(this);
 
     // El estado son las distintas variables que puede 
     // tener cada componente, y que se van modificando 
     // segun sea necesario
     this.state = {
-      x: 0, // Coordenada X del formulario a enviar
-      y: 0, // Coordenada Y del formulario a enviar
+      rows: 8, // Numero de filas que tendra el tablero
+      columns: 6, // Numero de columnas que tendra el tablero
       playerId: '', //ID del jugador, entregado y generado por el servidor
       players: [], // Lista de jugadores activos
       server: 'localhost', // Servidor donde se conecta 
@@ -27,13 +24,19 @@ class App extends React.Component {
 
   }
 
+  /**
+   * Funcion que se llama en cuanto el componente carga por primera vez. 
+   * Aqui se ejecuta el codigo que se necesita para el funcionamiento del componente
+   * Pero que no tiene por que ejecutarse al arrancar la aplicacion, sino al arrancar el componente
+   */
   componentDidMount(){
     this.setState({
       server: this.props.match.params.server,
       username: this.props.match.params.username
     });
+
     //Punto de entrada para el websocket
-    const url = 'ws://'+this.props.match.params.server+':8080' //Cambiar a url dinámica
+    const url = `ws://${this.props.match.params.server}:8080`
     console.log(url)
     connection = new WebSocket(url)
 
@@ -59,29 +62,15 @@ class App extends React.Component {
   /**
    * Funcion que controla el envio del formulario. Manda un mensaje con formato
    * {'type': 'updateCoordinates', 'data': {'id: num, 'x': num, 'y': num}} al servidor con las nuevas coordenadas
+   * @param {int} x Nueva coordenada X
+   * @param {int} y Nueva coordenada Y
    */
-  sendCoordinates(){
-    var data = {'id': this.state.playerId, 'x': this.state.x, 'y': this.state.y};
+    /**
+   */
+  sendCoordinates(x,y){
+    var data = {'id': this.state.playerId, 'x': x, 'y': y};
     var message = {'type': 'updateCoordinates', 'data': data};
     connection.send(JSON.stringify(message)) 
-  }
-
-  /**
-   * Funcion que controla el cambio del estado de X en el formulario. 
-   * Tiene actualizado this.state.x en todo momento
-   * @param {*} event Evento generado por el cambio provocado por el formulario
-   */
-  handleChangeX(event) {
-    this.setState({x: event.target.value});
-  }
-
-  /**
-   * Funcion que controla el cambio del estado de Y en el formulario. 
-   * Tiene actualizado this.state.y en todo momento
-   * @param {*} event Evento generado por el cambio provocado por el formulario
-   */
-  handleChangeY(event) {
-    this.setState({y: event.target.value});
   }
 
   /**
@@ -143,22 +132,20 @@ class App extends React.Component {
     })
 
     this.setState({
-      recvX: data['x'],
-      recvY: data['y'],
       players: newPlayers,
     })
   }
 
   /**
    * Funcion que controla la creacion de filas de la tabla de manera dinamica
-   * con la lista de jugadores activos.
+   * con la lista de jugadores activos. 
+   * (No esta en uso, pero se queda como referencia para tablas dinamicas)
    */
   renderPlayersData(){
-    console.log('Render: ' + this.state.players)
     return this.state.players.map((player, index) => {
       return(
-        <tr >
-          <td>Player {player['id']}</td>
+        <tr>
+          <td >Player {player['id']}</td>
           <td>X: {player['x']}</td>
           <td>Y: {player['y']}</td>
         </tr>
@@ -166,43 +153,10 @@ class App extends React.Component {
     })
   }
 
-  
-
   render(){
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <form>
-            <div>
-            <label>
-              X:
-              <input type="text" value={this.state.x} onChange={this.handleChangeX}/>
-            </label>
-            </div>
-
-            <div>
-            <label>
-              Y:
-              <input type="text" value={this.state.y} onChange={this.handleChangeY}/>
-            </label>
-            </div>
-
-          </form>
-          <button onClick={this.sendCoordinates}>Send coordinates</button>
-          <Link to="/">       
-            <button>Login</button>
-          </Link>
-          <div>
-            I'm player: {this.state.playerId}
-          <table>
-              Players:
-              <tbody>
-                {this.renderPlayersData()}
-              </tbody>
-          </table>
-          </div>
-        </header>
+      <div>
+        <GameBoard rows={this.state.rows} columns={this.state.columns} handleClick={this.sendCoordinates} players={this.state.players} />
       </div>
     )
   }
