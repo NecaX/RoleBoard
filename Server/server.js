@@ -11,11 +11,13 @@ wss.on('connection', (ws, req) => {
   ws.on('message', message => {
     var obj = JSON.parse(message)
     // Dependiendo del tipo de mensaje recibido, se realiza una accion u otra
-    if(obj['type'] == 'updateCoordinates'){
-      // Actualiza las coordenadas del objeto en el servidor
-      ws.x = obj['data']['x']
-      ws.y = obj['data']['y']
-      sendNewCoordinates(wss, message);
+    switch(obj['type']){
+      case 'updateCoordinates':
+        // Actualiza las coordenadas del objeto en el servidor
+        ws.x = obj['data']['x']
+        ws.y = obj['data']['y']
+        sendNewCoordinates(wss, message);
+        break;
     }
   })
 

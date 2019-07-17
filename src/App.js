@@ -29,9 +29,9 @@ class App extends React.Component {
     }
 
     // Funcion vacia por si es necesario en un futuro
-    connection.onopen = () => {
-      //connection.send('Message From Client') 
-    }
+    // connection.onopen = () => {
+    //   connection.send('Message From Client') 
+    // }
     
     // Error log
     connection.onerror = (error) => {
@@ -45,6 +45,24 @@ class App extends React.Component {
       console.log(e.data)
       this.processMessage(e.data)
     }
+  }
+
+  /**
+   * Funcion que procesa los mensajes recibidos del server.
+   * Los mensajes son JSON del formato {'type': xxx, 'data': xxx}
+   * @param {String} data String que contiene el mensaje a procesar
+   */
+  processMessage(data){
+    var obj = JSON.parse(data)
+    if(obj['type'] === 'init'){
+      this.initializePlayer(obj['data'])
+    }
+    if(obj['type'] === 'updatePlayers'){
+      this.updatePlayers(obj['data'])
+    }
+    if(obj['type'] === 'updateCoordinates'){
+      this.updateCoordinates(obj['data'])
+    }    
   }
 
   /**
@@ -73,24 +91,6 @@ class App extends React.Component {
    */
   handleChangeY(event) {
     this.setState({y: event.target.value});
-  }
-
-  /**
-   * Funcion que procesa los mensajes recibidos del server.
-   * Los mensajes son JSON del formato {'type': xxx, 'data': xxx}
-   * @param {String} data String que contiene el mensaje a procesar
-   */
-  processMessage(data){
-    var obj = JSON.parse(data)
-    if(obj['type'] === 'init'){
-      this.initializePlayer(obj['data'])
-    }
-    if(obj['type'] === 'updatePlayers'){
-      this.updatePlayers(obj['data'])
-    }
-    if(obj['type'] === 'updateCoordinates'){
-      this.updateCoordinates(obj['data'])
-    }    
   }
 
   /**
