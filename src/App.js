@@ -42,7 +42,7 @@ class App extends React.Component {
 
     // Funcion vacia por si es necesario en un futuro
     // connection.onopen = () => {
-    //   //connection.send('Message From Client') 
+    //   connection.send('Message From Client') 
     // }
     
     // Error log
@@ -57,20 +57,6 @@ class App extends React.Component {
       console.log(e.data)
       this.processMessage(e.data)
     }
-  }
-
-  /**
-   * Funcion que controla el envio del formulario. Manda un mensaje con formato
-   * {'type': 'updateCoordinates', 'data': {'id: num, 'x': num, 'y': num}} al servidor con las nuevas coordenadas
-   * @param {int} x Nueva coordenada X
-   * @param {int} y Nueva coordenada Y
-   */
-    /**
-   */
-  sendCoordinates(x,y){
-    var data = {'id': this.state.playerId, 'x': x, 'y': y};
-    var message = {'type': 'updateCoordinates', 'data': data};
-    connection.send(JSON.stringify(message)) 
   }
 
   /**
@@ -89,6 +75,18 @@ class App extends React.Component {
     if(obj['type'] === 'updateCoordinates'){
       this.updateCoordinates(obj['data'])
     }    
+  }
+
+  /**
+   * Funcion que controla el envio del formulario. Manda un mensaje con formato
+   * {'type': 'updateCoordinates', 'data': {'id: num, 'x': num, 'y': num}} al servidor con las nuevas coordenadas
+   * @param {int} x Nueva coordenada X
+   * @param {int} y Nueva coordenada Y
+   */
+  sendCoordinates(x,y){
+    var data = {'id': this.state.playerId, 'x': x, 'y': y};
+    var message = {'type': 'updateCoordinates', 'data': data};
+    connection.send(JSON.stringify(message)) 
   }
 
   /**
