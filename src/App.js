@@ -140,7 +140,7 @@ class App extends React.Component {
   render(){
     return (
       <div>
-        <GameBoard rows={this.state.rows} columns={this.state.columns} handleClick={this.sendCoordinates} players={this.state.players} cycle={this.state.cycle} />
+        <GameBoard rows={this.state.rows} columns={this.state.columns} handleClick={this.sendCoordinates} players={this.state.players} cycle={this.state.cycle} playerId={this.state.playerId} />
       </div>
     )
   }
