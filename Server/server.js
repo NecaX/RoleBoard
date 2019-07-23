@@ -22,8 +22,6 @@ wss.on('connection', (ws, req) => {
           ws.y = obj['data']['y']
           activePlayers[obj['data']['id']]['x'] = obj['data']['x']
           activePlayers[obj['data']['id']]['y'] = obj['data']['y']
-          console.log(activePlayers)
-          console.log(`Turno ${cycle}`)
           sendNewCoordinates(wss, message);
           // Por ahora se actualiza el turno cuando llega una nueva posicion
           increaseTurn();
@@ -36,10 +34,13 @@ wss.on('connection', (ws, req) => {
 
   ws.on('close', (code, reason) => {
     console.log('Disconnected player ' + ws.id);
+    // Elimina al jugador desconectado de la partida y vuelve a repartir turnos
+    // Se puede modificar para que los turnos mantengan el orden
     delete activePlayers[ws.id]
-    console.log(Object.keys(activePlayers))
+    deliverTurns();
     updatePlayers(wss);
   })
+
   /**
    * Funcion que controla el broadcast de las coordenadas nuevas de un jugador a todo el mundo
    * @param {WebSocket Server} wss Servidor WebSocket que contiene todos los clientes
@@ -65,10 +66,10 @@ wss.on('connection', (ws, req) => {
     ws.x = 0;
     ws.y = 0;
     activePlayers[idGen] = {'x': ws.x, 'y': ws.y};
-
     var players = generatePlayersList(wss);
     var data = {'id': idGen, 'players': players, 'cycle': cycle};
     var message = {'type': 'init', 'data': data};
+    // Cuando se conecta un nuevo jugador, se reparten los turnos de nuevo
     deliverTurns();
     ws.send(JSON.stringify(message));
   }
@@ -87,6 +88,11 @@ wss.on('connection', (ws, req) => {
     });
   }
 
+  /**
+   * Funcion que entrega el turno a cada jugador
+   * Actualmente los entrega totalmente al azar
+   * Se puede modificar para entregarlos con un sistema de d20
+   */
   function deliverTurns(){
     var newOrder = shuffle(Object.keys(activePlayers))
     for (var i = 0; i < newOrder.length; i++){
@@ -94,6 +100,9 @@ wss.on('connection', (ws, req) => {
     }
   }
 
+  /**
+   * Funcion que desordena de manera aleatoria un array
+   */
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
@@ -102,10 +111,20 @@ wss.on('connection', (ws, req) => {
     return array;
   }
 
+  /**
+   * Funcion que actualiza el ciclo de juego.
+   * Separada del codigo para llamarla cuando sea necesario
+   */
   function increaseTurn(){
     cycle++;
   }
 
+  /**
+   * Funcion que genera el array de jugadores con sus campos correspondientes
+   * Debido a su uso en multiples partes del codigo, se extrae a una funcion 
+   * para poder escalar la estructura en un solo sitio
+   * @param {WebSocket Server} wss Servidor WebSocket con todos los clientes para generar la lista de jugadores activos
+   */
   function generatePlayersList(wss){
     var players = []
     wss.clients.forEach(function each(client) {

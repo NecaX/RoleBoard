@@ -8,10 +8,10 @@ class GameSquare extends React.Component {
     return (
       <td className="GameSquare" onClick={() => this.props.handleClick(this.props.x, this.props.y)} >
         {/* Content of each square. Can (will) be expanded with images, backgrounds and different elements */}
+        {/* Currently the color changes if the square contains the player */}
         <div style={this.props.myself ? {color: 'blue'} : {color: 'black'}}>
           {this.props.content === undefined ? '-' : `Player ${this.props.content}`}
         </div>
-         
       </td>
     )
   }

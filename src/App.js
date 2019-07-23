@@ -92,8 +92,8 @@ class App extends React.Component {
 
   /**
    * Funcion que controla la inicializacion del jugador
-   * Guarda el ID unico del jugador, y la lista de jugadores activos
-   * @param {JSON} data Contiene el id unico y la lista de jugadores
+   * Guarda el ID unico del jugador, y la lista de jugadores activos, asi como el ciclo de juego actual
+   * @param {JSON} data Contiene el id unico, la lista de jugadores y el ciclo de juego
    */
   initializePlayer(data){
     this.setState({
@@ -114,7 +114,7 @@ class App extends React.Component {
   }
 
   /**
-   * Funcion que actualiza las coordenadas de cada jugador.
+   * Funcion que actualiza las coordenadas de cada jugador. Ademas, actualiza el ciclo de juego
    * Recibe un mensaje JSON del formato {'id': xxx, 'x': xxx, 'y':xxx}
    * @param {JSON} data Objeto con las nuevas coordenadas del jugador correspondiente
    */
@@ -140,7 +140,12 @@ class App extends React.Component {
   render(){
     return (
       <div>
-        <GameBoard rows={this.state.rows} columns={this.state.columns} handleClick={this.sendCoordinates} players={this.state.players} cycle={this.state.cycle} playerId={this.state.playerId} />
+        <GameBoard  rows={this.state.rows} 
+                    columns={this.state.columns} 
+                    handleClick={this.sendCoordinates} 
+                    players={this.state.players} 
+                    cycle={this.state.cycle} 
+                    playerId={this.state.playerId} />
       </div>
     )
   }
