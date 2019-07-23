@@ -20,6 +20,7 @@ class App extends React.Component {
       players: [], // Lista de jugadores activos
       server: 'localhost', // Servidor donde se conecta 
       username: 'default', // Nombre de usuario
+      cycle: 0, // Ciclo de juego
     }
 
   }
@@ -97,7 +98,8 @@ class App extends React.Component {
   initializePlayer(data){
     this.setState({
       playerId: data['id'],
-      players: data['players'] 
+      players: data['players'],
+      cycle: data['cycle'],
     })
   }
 
@@ -131,30 +133,14 @@ class App extends React.Component {
 
     this.setState({
       players: newPlayers,
-    })
-  }
-
-  /**
-   * Funcion que controla la creacion de filas de la tabla de manera dinamica
-   * con la lista de jugadores activos. 
-   * (No esta en uso, pero se queda como referencia para tablas dinamicas)
-   */
-  renderPlayersData(){
-    return this.state.players.map((player, index) => {
-      return(
-        <tr>
-          <td >Player {player['id']}</td>
-          <td>X: {player['x']}</td>
-          <td>Y: {player['y']}</td>
-        </tr>
-      )
+      cycle: this.state.cycle + 1,
     })
   }
 
   render(){
     return (
       <div>
-        <GameBoard rows={this.state.rows} columns={this.state.columns} handleClick={this.sendCoordinates} players={this.state.players} />
+        <GameBoard rows={this.state.rows} columns={this.state.columns} handleClick={this.sendCoordinates} players={this.state.players} cycle={this.state.cycle} />
       </div>
     )
   }

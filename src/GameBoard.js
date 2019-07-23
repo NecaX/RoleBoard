@@ -54,6 +54,24 @@ class GameBoard extends React.Component {
     })
   }
 
+  /**
+   * Funcion que controla la creacion de filas de la tabla de manera dinamica
+   * con la lista de jugadores activos. 
+   * (No esta en uso, pero se queda como referencia para tablas dinamicas)
+   */
+  renderPlayersData(){
+    return this.props.players.map((player, index) => {
+      return(
+        <tr>
+          <td >Player {player['id']}</td>
+          <td>X: {player['x']}</td>
+          <td>Y: {player['y']}</td>
+          <td>Turn: {player['turn']}</td>
+        </tr>
+      )
+    })
+  }
+
 
   render(){
     return (
@@ -61,6 +79,14 @@ class GameBoard extends React.Component {
         <table style={{borderWidth: '1px', borderStyle: 'solid'}}>
             {this.renderRows()}
         </table>
+        <table style={{marginTop: '40px'}}>
+          <tbody>
+            {this.renderPlayersData()}
+          </tbody>
+        </table>
+        <div>
+          Cycle: {this.props.cycle}
+        </div>
       </div>
     )
   }
