@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import dice from './img/dice_no_bg.png';
 import onedice from './img/one-dice.png';
-import ValidField from './ValidField'
 import Fab from '@material-ui/core/Fab';
 import 'typeface-roboto';
 import Avatar from '@material-ui/core/Avatar';
@@ -19,15 +18,15 @@ class Login extends React.Component {
       username: 'default',
     }
   }
-  modifyUsername (value) {
+  modifyUsername (event) {
     this.setState({
-      username: value
+      username: event.target.value
     })
   }
 
-  modifyServer (value) {
+  modifyServer (event) {
     this.setState({
-      server: value
+      server: event.target.value
     })
   }
   
@@ -39,8 +38,15 @@ class Login extends React.Component {
           <img src={dice}  className="dice-logo" style={{marginTop: 50}}/>
         </div>
         <div className="text-field">
-          <ValidField onModify={this.modifyUsername} label="Username" placeholder=''/>
-          <ValidField onModify={this.modifyServer} label="Server" placeholder='localhost'/>
+          <label class="pure-material-textfield-outlined">
+            <input placeholder=" " onChange={this.modifyUsername}/>
+            <span>Username</span>
+          </label>
+
+          <label class="pure-material-textfield-outlined">
+            <input placeholder=" " onChange={this.modifyServer}/>
+            <span>Server</span>
+          </label>
         </div>
         <div style={{display: 'flex', paddingBottom: 30}}>
           <Link to={'/app/'+this.state.username+'/'+this.state.server} style={{ textDecoration: 'none' }}>   
@@ -50,6 +56,7 @@ class Login extends React.Component {
             </Fab>
           </Link>
         </div>
+        
       </div>
     )
   }
