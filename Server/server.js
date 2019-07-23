@@ -63,8 +63,10 @@ wss.on('connection', (ws, req) => {
     idGen++;
     ws.id = idGen;
     // Inicializa las coordenadas en el servidor a 0
-    ws.x = 0;
-    ws.y = 0;
+    let {x,y} = spawnPlayer();
+    console.log(`X: ${x}, Y: ${y}`)
+    ws.x = x;
+    ws.y = y;
     activePlayers[idGen] = {'x': ws.x, 'y': ws.y};
     var players = generatePlayersList(wss);
     var data = {'id': idGen, 'players': players, 'cycle': cycle};
@@ -131,6 +133,45 @@ wss.on('connection', (ws, req) => {
       players.push({'id': client.id, 'x': client.x, 'y': client.y, 'turn': activePlayers[client.id]['turn']})
     });
     return players;
+  }
+
+  /**
+   * Funcion que genera las coordenadas de un nuevo
+   * jugador en una posicion valida
+   */
+  function spawnPlayer(){
+    var x = 0;
+    var y = 0;
+    var changeX = true;
+    while(!positionValid(x,y)){
+      if(changeX){
+        x++;
+      }else{
+        x--;
+        y++;
+      }
+      changeX = !changeX;
+    }
+    return {
+      x: x,
+      y: y
+    }
+  }
+
+  /**
+   * Funcion que comprueba que la posicion x,y no esta siendo ocupada
+   * por ningun otro elemento
+   * @param {int} x Coordenada X de la posicion
+   * @param {int} y Coordenada Y de la posicion
+   */
+  function positionValid(x,y){
+    for(var player in activePlayers){
+      console.log(player)
+      if(activePlayers[player]['x'] === x && activePlayers[player]['y'] === y){
+        return false;
+      }
+    }
+    return true;
   }
 
 })

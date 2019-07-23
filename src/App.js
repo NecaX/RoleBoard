@@ -123,8 +123,6 @@ class App extends React.Component {
     var id = data['id']
 
     newPlayers.forEach((elem) => {
-      console.log(elem['id'])
-      console.log(id)
       if (elem['id'] === id){
         elem['x'] = data['x']
         elem['y'] = data['y']
@@ -137,6 +135,17 @@ class App extends React.Component {
     })
   }
 
+  /**
+   * Funcion que devuelve si es el turno del jugador
+   */
+  isMyTurn(){
+    for (var elem in this.state.players){
+      if (this.state.players[elem]['id'] === this.state.playerId){
+        return (this.state.cycle % Object.keys(this.state.players).length == this.state.players[elem]['turn']);
+      }
+    }
+  }
+
   render(){
     return (
       <div>
@@ -145,7 +154,9 @@ class App extends React.Component {
                     handleClick={this.sendCoordinates} 
                     players={this.state.players} 
                     cycle={this.state.cycle} 
-                    playerId={this.state.playerId} />
+                    playerId={this.state.playerId}
+                    myTurn={this.isMyTurn()} 
+                    />
       </div>
     )
   }
