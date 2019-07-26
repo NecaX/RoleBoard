@@ -42,9 +42,11 @@ class App extends React.Component {
     connection = new WebSocket(url)
 
     // Funcion vacia por si es necesario en un futuro
-    // connection.onopen = () => {
-    //   connection.send('Message From Client') 
-    // }
+    connection.onopen = () => {
+      var data = {'username': this.props.match.params.username};
+      var message = {'type': 'newPlayer', 'data': data};
+      connection.send(JSON.stringify(message)) 
+    }
     
     // Error log
     connection.onerror = (error) => {
