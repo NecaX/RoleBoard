@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './Login';
 import App from './App';
-import './Login.css';
+import SelectGameMode from './SelectGameMode';
 
 import {
     HashRouter,
@@ -12,11 +12,12 @@ import {
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <div className="Login">
+    <div className="root">
         <HashRouter>
             <div >
                 <Route path="/" exact     component={ Login } />
-                <Route path="/app/:username/:server"  component={ App } />
+                <Route path="/sgm/:username/"  component={ SelectGameMode } />
+                <Route path="/app/:username/:password"  component={ App } />
             </div>
         </HashRouter>
     </div>

@@ -1,3 +1,9 @@
+.root {
+  user-select:none;
+  background-color: #282c34;
+
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -11,3 +17,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/* Color Pallete
+  Background: 282c34
+  Purple: 541388
+  Green: 5fbb97
+  Dark blue: 031a6b
+  Clear red: d33f49
+*/

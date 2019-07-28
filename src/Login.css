@@ -1,16 +1,16 @@
-.Login {
-  user-select:none;
-  background-color: #282c34;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.login-container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .dice-logo {
-  height: 30vmin;
+  height: 25vmin;
   pointer-events: none;
   text-align: center;
-
+  margin-top: 5%;
 }
 
 .text-field {
@@ -20,19 +20,6 @@
   flex-direction: column;
 }
 
-.Logo-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
 
 .pure-material-textfield-outlined {
     --pure-material-safari-helper1: rgb(var(--pure-material-primary-rgb, 33, 150, 243));
@@ -224,6 +211,19 @@
             transition-duration: 0.1s;
         }
     }
+}
+
+h2 {
+    width: 90%;
+    text-align: center;
+    border-bottom: 1px solid rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.2);
+    line-height: 0.1em; 
+    font-size: 120%;
+}
+h2 span {
+    background: #282c34;
+    padding: 0 10px;
+    color: rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.38);
 }
 
 

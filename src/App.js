@@ -32,12 +32,11 @@ class App extends React.Component {
    */
   componentDidMount(){
     this.setState({
-      server: this.props.match.params.server,
       username: this.props.match.params.username
     });
 
     //Punto de entrada para el websocket
-    const url = `ws://${this.props.match.params.server}:8080`
+    const url = `ws://localhost:8080`
     console.log(url)
     connection = new WebSocket(url)
 
