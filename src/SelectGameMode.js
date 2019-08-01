@@ -1,10 +1,10 @@
 import React from 'react';
 import './SelectGameMode.css';
-import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import Create from '@material-ui/icons/Create';
 import sword from './img/sword.png';
+
 
 class SelectGameMode extends React.Component {
   constructor(props) {
@@ -33,17 +33,6 @@ class SelectGameMode extends React.Component {
       )
     })
   }
-
-  ColorButton = withStyles(theme => ({
-    root: {
-      color: 'white',
-      borderColor: '#541388',
-      '&:hover': {
-        backgroundColor: '#541388',
-        color: 'white'
-      },
-    },
-  }))(Button);
 
   GreenFab = withStyles(theme => ({
     root: {
@@ -81,6 +70,10 @@ class SelectGameMode extends React.Component {
     this.setState({
       toPlay: event.target.value
     })
+  }
+
+  navigate(route){
+    this.props.history.push(route)
   }
 
   render() {
@@ -128,7 +121,7 @@ class SelectGameMode extends React.Component {
           </div>
 
           <div className='continue-button'>
-              <this.GreenFab variant="extended" aria-label="Delete" >
+              <this.GreenFab variant="extended" aria-label="Delete" onClick={() => this.navigate('/cch')}>
               <img src={sword} style={{width: '30px', paddingRight: 10}} />
                 Join a new Adventure
               </this.GreenFab>

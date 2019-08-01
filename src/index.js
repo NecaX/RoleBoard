@@ -4,6 +4,7 @@ import './index.css';
 import Login from './Login';
 import App from './App';
 import SelectGameMode from './SelectGameMode';
+import CreateCharacter from './CreateCharacter';
 
 import {
     HashRouter,
@@ -17,6 +18,7 @@ ReactDOM.render(
             <div >
                 <Route path="/" exact     component={ Login } />
                 <Route path="/sgm/:username/"  component={ SelectGameMode } />
+                <Route path="/cch"  component={ CreateCharacter } />
                 <Route path="/app/:username/:password"  component={ App } />
             </div>
         </HashRouter>
