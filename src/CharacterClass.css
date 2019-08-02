@@ -1,0 +1,56 @@
+.character-class-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+ .character-class-table {
+    display: flex;
+    flex-direction: column;
+    height: 85%;
+    width: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+
+ .scroll {
+    overflow-y: auto;
+  }
+
+ .character-class-table tr {
+    display: flex;
+    flex: 1;
+
+  }
+ .character-class-table tr th {
+    flex: 1;
+    height: 40px;
+    background-color: #304385;
+    color: white;
+    border-bottom: 3px solid #192e78;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .character-class-table tr td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2%;
+    flex: 1;
+    background-color: #fff;
+    font-family: 'Luminari';
+  }
+
+
+
+  .character-class-selection td {
+    background-color: #d7b356 !important;
+  }
+

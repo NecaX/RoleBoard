@@ -2,9 +2,8 @@ import React from 'react';
 import './CharacterGeneral.css';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/styles';
-import Paper from '@material-ui/core/Paper';
-import { Box } from '@material-ui/core';
 import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
+import { fontFamily } from '@material-ui/system';
 
 
 class CharacterGeneral extends React.Component {
@@ -48,7 +47,8 @@ class CharacterGeneral extends React.Component {
     CssTextField = withStyles({
         root: {
             '& label': {
-                color: 'rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.6)'
+                color: 'rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.6)',
+                fontFamily: 'Luminari'
             },
             '& label.Mui-focused': {
                 color: 'rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.93)',
@@ -94,7 +94,7 @@ class CharacterGeneral extends React.Component {
                     <this.CssTextField
                         margin="dense"
                         id="name"
-                        label="Character name"
+                        label="Name"
                         variant="outlined"
                         fullWidth
                     />

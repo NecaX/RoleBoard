@@ -3,6 +3,7 @@ import './CreateCharacter.css';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import CharacterGeneral from './CharacterGeneral';
+import CharacterClass from './CharacterClass'
 import Fab from '@material-ui/core/Fab';
 import Send from '@material-ui/icons/Send';
 import { withStyles } from '@material-ui/core/styles';
@@ -13,8 +14,9 @@ class CreateCharacter extends React.Component {
     constructor(props) {
         super(props); //Constructor padre
         this.handleClick = this.handleClick.bind(this)
+        this.setStyle = this.setStyle.bind(this)
         this.state = {
-            page: 0
+            page: 1
         }
     }
 
@@ -28,10 +30,19 @@ class CreateCharacter extends React.Component {
         })
     }
 
+    setStyle(targetPage) {
+        this.setState({
+            page: targetPage
+        })
+    }
+
     getPage() {
         switch (this.state.page) {
             case 0:
                 return <CharacterGeneral />
+                break;
+            case 1:
+                return <CharacterClass/>
                 break;
             default:
                 return <div>Hola caracola</div>
@@ -57,16 +68,16 @@ class CreateCharacter extends React.Component {
                 </div>
                 <div className="character-breadcrumb">
                     <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon fontSize="medium" style={{ color: '#5fbb97' }} />}>
-                        <div style={this.getStyle(0)}>General</div>
-                        <div style={this.getStyle(1)}>Class</div>
-                        <div style={this.getStyle(2)}>Race</div>
-                        <div style={this.getStyle(3)}>Weapons</div>
-                        <div style={this.getStyle(4)}>Skills</div>
-                        <div style={this.getStyle(5)}>Feats</div>
-                        <div style={this.getStyle(6)}>Summary</div>
+                        <div className="breadcrumb-option" onClick={() => this.setStyle(0)} style={this.getStyle(0)}>General</div>
+                        <div className="breadcrumb-option" onClick={() => this.setStyle(1)} style={this.getStyle(1)}>Class</div>
+                        <div className="breadcrumb-option" onClick={() => this.setStyle(2)} style={this.getStyle(2)}>Race</div>
+                        <div className="breadcrumb-option" onClick={() => this.setStyle(3)} style={this.getStyle(3)}>Weapons</div>
+                        <div className="breadcrumb-option" onClick={() => this.setStyle(4)} style={this.getStyle(4)}>Skills</div>
+                        <div className="breadcrumb-option" onClick={() => this.setStyle(5)} style={this.getStyle(5)}>Feats</div>
+                        <div className="breadcrumb-option" onClick={() => this.setStyle(6)} style={this.getStyle(6)}>Summary</div>
                     </Breadcrumbs>
                     <this.GreenFab variant="extended" onClick={this.handleClick}>
-                        Next
+                    <div className="breadcrumb-option">Next</div>
                         <Send style={{ paddingLeft: 10 }} />
                     </this.GreenFab>
                 </div>
