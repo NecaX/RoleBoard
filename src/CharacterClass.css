@@ -4,28 +4,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 
- .character-class-table {
+.character-class-table {
     display: flex;
     flex-direction: column;
     height: 85%;
     width: 90%;
     border-radius: 10px;
     overflow: hidden;
-  }
+}
 
-
- .scroll {
+.scroll {
     overflow-y: auto;
-  }
+}
 
- .character-class-table tr {
+.character-class-table tr {
     display: flex;
     flex: 1;
+}
 
-  }
- .character-class-table tr th {
+.character-class-table tr th {
     flex: 1;
     height: 40px;
     background-color: #304385;
@@ -35,9 +34,13 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-  }
+}
 
-  .character-class-table tr td {
+.character-class-table tr:hover td {
+    background-color: rgba(255,255,255,0.95);
+}
+
+.character-class-table td {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,11 +49,9 @@
     flex: 1;
     background-color: #fff;
     font-family: 'Luminari';
-  }
+}
 
-
-
-  .character-class-selection td {
+.character-class-selection td {
     background-color: #d7b356 !important;
-  }
+}
 

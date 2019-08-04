@@ -37,77 +37,77 @@ class CharacterClass extends React.Component {
                     ability: 'Charisma'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
                     ability: 'Strength'
                 },
                 {
-                    icon: 'icon',
+                    icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
@@ -122,12 +122,12 @@ class CharacterClass extends React.Component {
         return array.map((charclass, index) => {
             return (
                 <tr onClick={() => this.changeSelected(index)}>
-                    <td><Avatar src={charclass['icon']} /></td>
-                    <td>{charclass['name']}</td>
-                    <td>{charclass['dice']}</td>
-                    <td>{charclass['role']}</td>
-                    <td>{charclass['ability']}</td>
-                    <td><Info style={{ color: 'rgba(0,0,0,0.4)' }} /></td>
+                    <td style={{flexGrow: 1}}><Avatar src={charclass['icon']} /></td>
+                    <td style={{flexGrow: 2}}>{charclass['name']}</td>
+                    <td style={{flexGrow: 1}}>{charclass['dice']}</td>
+                    <td style={{flexGrow: 4}}>{charclass['role']}</td>
+                    <td style={{flexGrow: 2}}>{charclass['ability']}</td>
+                    <td style={{flexGrow: 1}}><Info style={{ color: 'rgba(0,0,0,0.4)' }} /></td>
                 </tr>
             )
         })
@@ -142,11 +142,11 @@ class CharacterClass extends React.Component {
     renderChosen(charclass) {
         return (
             <tr className="character-class-selection">
-                <td><Avatar src={charclass['icon']} /></td>
-                <td>{charclass['name']}</td>
-                <td>{charclass['dice']}</td>
-                <td>{charclass['role']}</td>
-                <td>{charclass['ability']}</td>
+                    <td style={{flexGrow: 1}}><Avatar src={charclass['icon']} /></td>
+                    <td style={{flexGrow: 2}}>{charclass['name']}</td>
+                    <td style={{flexGrow: 1}}>{charclass['dice']}</td>
+                    <td style={{flexGrow: 4}}>{charclass['role']}</td>
+                    <td style={{flexGrow: 2}}>{charclass['ability']}</td>
             </tr>
         )
     }
@@ -157,12 +157,12 @@ class CharacterClass extends React.Component {
                 <table class="character-class-table">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Class Name</th>
-                            <th>Hit die</th>
-                            <th>Role Style</th>
-                            <th>Favoured ability</th>
-                            <th></th>
+                            <th style={{flexGrow: 0.9}}></th>
+                            <th style={{flexGrow: 2}}>Class Name</th>
+                            <th style={{flexGrow: 0.7}}>Hit die</th>
+                            <th style={{flexGrow: 3}}>Role Style</th>
+                            <th style={{flexGrow: 2}}>Favoured ability</th>
+                            <th style={{flexGrow: 1}}></th>
                         </tr>
                     </thead>
                     <tbody class="scroll">
