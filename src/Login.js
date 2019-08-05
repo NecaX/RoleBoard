@@ -24,6 +24,7 @@ class Login extends React.Component {
     this.handleNewPassword = this.handleNewPassword.bind(this);
     this.handleNewUsername = this.handleNewUsername.bind(this);
     this.handleRepeatPassword = this.handleRepeatPassword.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.login = this.login.bind(this);
@@ -155,6 +156,14 @@ class Login extends React.Component {
     })
   }
 
+  handleKeyPress(event){
+    if(event.key === 'Enter'){
+      this.login()
+    }
+
+  }
+
+
   /**
    * Funcion que indica si hay alguna pass y no coincide con la repetida
    */
@@ -170,12 +179,12 @@ class Login extends React.Component {
         </div>
         <div className="text-field">
           <label className="pure-material-textfield-outlined">
-            <input placeholder=" " onChange={this.modifyUsername}/>
+            <input placeholder=" " onChange={this.modifyUsername} onKeyPress={this.handleKeyPress}/>
             <span>Username</span>
           </label>
 
           <label className="pure-material-textfield-outlined">
-            <input type="password" placeholder=" " onChange={this.modifyPassword}/>
+            <input type="password" placeholder=" " onChange={this.modifyPassword} onKeyPress={this.handleKeyPress}/>
             <span>Password</span>
           </label>
         </div>

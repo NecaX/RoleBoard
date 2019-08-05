@@ -101,23 +101,23 @@
 }
 
 .yellow {
-    background-color: rgb(235, 235, 93) !important;
+    background-color: #ebeb5d !important;
     border-radius: 10px;
     margin-left: 5px;
     margin-right: 5px;
 }
 
 .green {
-    background-color: #5fbb97 !important;
+    background-color: #a7ff71 !important;
     border-radius: 10px;
     margin-left: 5px;
     margin-right: 5px;
 }
 
 .blue {
-    background-color: #9133dd !important;
-    color: white;
+    background-color: #00646E !important;
     border-radius: 10px;
+    color: white;
     margin-left: 5px;
     margin-right: 5px;
 }

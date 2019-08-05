@@ -43,8 +43,8 @@ class CharacterRace extends React.Component {
                     },
                     traits: [
                         'Low-Light Vision',
-                        'Elven Immunities',
-                        'Elven Magic',
+                        'Elven immunities',
+                        'Elven magic',
                     ]
                 },
                 {
@@ -57,7 +57,7 @@ class CharacterRace extends React.Component {
                     },
                     traits: [
                         'Darkvision',
-                        'Defensive Training',
+                        'Defensive training',
                         'Greed',
                         'Hatred',
                         'Hardy'
@@ -72,8 +72,8 @@ class CharacterRace extends React.Component {
                         'Constitution': 2,
                     },
                     traits: [
-                        'Defensive Training',
-                        'Gnome Magic',
+                        'Defensive training',
+                        'Gnome magic',
                         'Hatred',
                         'Illusion Resistance',
                     ]
@@ -231,7 +231,7 @@ class CharacterRace extends React.Component {
                 colorClass = 'yellow'
             } else if(racemod + score < 15) {
                 colorClass = 'green'
-            } else {
+            } else{
                 colorClass = 'blue'
             }
 
@@ -383,7 +383,7 @@ class CharacterRace extends React.Component {
                                 <th>Name</th>
                                 <th>Score</th>
                                 <th>Race modifier</th>
-                                <th>Final modifier</th>
+                                <th>Final Score</th>
                             </tr>
                         </thead>
                         <tbody>

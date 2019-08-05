@@ -8,6 +8,7 @@ import CharacterRace from './CharacterRace';
 import Fab from '@material-ui/core/Fab';
 import Send from '@material-ui/icons/Send';
 import { withStyles } from '@material-ui/core/styles';
+import CharacterWeapon from './CharacterWeapon';
 
 
 class CreateCharacter extends React.Component {
@@ -17,7 +18,7 @@ class CreateCharacter extends React.Component {
         this.handleClick = this.handleClick.bind(this)
         this.setPage = this.setPage.bind(this)
         this.state = {
-            page: 2
+            page: 3
         }
     }
 
@@ -47,6 +48,9 @@ class CreateCharacter extends React.Component {
                 break;
             case 2: 
                 return <CharacterRace/>
+                break;
+            case 3:
+                return <CharacterWeapon/>
                 break;
             default:
                 return <div>Hola caracola</div>

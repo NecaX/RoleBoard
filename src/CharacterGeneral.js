@@ -67,7 +67,8 @@ class CharacterGeneral extends React.Component {
                     borderColor: 'rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.93)',
                 },
                 '& input': {
-                    color: 'rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.93)'
+                    color: 'rgba(var(--pure-material-onsurface-rgb, 255,255,255), 0.93)',
+                    fontFamily: 'Luminari'
                 }
             },
         },
