@@ -363,7 +363,7 @@ class CharacterRace extends React.Component {
                     <thead>
                         <tr>
                             <th style={{flexGrow: 1}}></th>
-                            <th style={{flexGrow: 2}}>Class Name</th>
+                            <th style={{flexGrow: 2}}>Race Name</th>
                             <th style={{flexGrow: 2}}>Ability modifiers</th>
                             <th style={{flexGrow: 3}}>Racial traits</th>
                             <th style={{flexGrow: 1}}></th>
