@@ -95,12 +95,12 @@ class CharacterSkill extends React.Component {
 
     render() {
         return (
-            <div class="character-skill-container">
+            <div className="character-skill-container">
                     <div className="character-skill-header">
                         <div className="character-skill-points">Points remaining: {this.state.pointsLeft}</div>
 
                     </div>
-                    <table class="character-skill-table">
+                    <table className="character-skill-table">
                         <thead>
                             <tr>
                                 <th >Name</th>
@@ -112,7 +112,7 @@ class CharacterSkill extends React.Component {
                                 <th ></th>
                             </tr>
                         </thead>
-                        <tbody class="scroll">
+                        <tbody className="scroll">
                             {this.renderOptions(this.state.skillsList)}
                         </tbody>
                     </table>

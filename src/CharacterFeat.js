@@ -112,12 +112,12 @@ class CharacterFeat extends React.Component {
 
     render() {
         return (
-            <div class="character-feat-container">
+            <div className="character-feat-container">
                     <div className="character-feat-header">
                         <div className="character-feat-points">Feats remaining: {this.state.featsLeft}</div>
                     </div>
                     <div className="character-feat-body">
-                        <table class="character-feat-table">
+                        <table className="character-feat-table">
                             <thead>
                                 <tr>
                                     <th style={{flexGrow: 2}}>Name</th>
@@ -126,18 +126,18 @@ class CharacterFeat extends React.Component {
                                     <th style={{flexGrow: 0.85}}></th>
                                 </tr>
                             </thead>
-                            <tbody class="scroll">
+                            <tbody className="scroll">
                                 {this.renderOptions(this.state.featsList)}
                             </tbody>
                         </table>
-                        <table class="character-feat-table character-feat-selection">
+                        <table className="character-feat-table character-feat-selection">
                             <thead>
                                 <tr>
                                     <th style={{flexGrow: 3}} >Feat selected</th>
                                     <th style={{flexGrow: 1}}></th>
                                 </tr>
                             </thead>
-                            <tbody class="scroll">
+                            <tbody className="scroll">
                                 {this.renderSelected()}
                             </tbody>
                             </table>

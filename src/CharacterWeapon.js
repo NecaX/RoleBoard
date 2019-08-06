@@ -199,10 +199,10 @@ class CharacterWeapon extends React.Component {
 
     render() {
         return (
-            <div class="character-weapon-container">
+            <div className="character-weapon-container">
                 <div className="character-weapon-side">
                     <div className="character-weapon-title">Primary Weapon</div>
-                    <table class="character-weapon-table">
+                    <table className="character-weapon-table">
                         <thead>
                             <tr>
                                 <th style={{ flexGrow: 1 }}>Type</th>
@@ -214,7 +214,7 @@ class CharacterWeapon extends React.Component {
                                 <th ></th>
                             </tr>
                         </thead>
-                        <tbody class="scroll">
+                        <tbody className="scroll">
                             {this.renderOptions(this.state.primaryList, this.changePrimary)}
                         </tbody>
                         <tbody >
@@ -225,7 +225,7 @@ class CharacterWeapon extends React.Component {
 
                 <div className="character-weapon-side">
                     <div className="character-weapon-title">Secondary Weapon</div>
-                    <table class="character-weapon-table">
+                    <table className="character-weapon-table">
                         <thead>
                             <tr>
                                 <th style={{ flexGrow: 1 }}>Type</th>
@@ -237,7 +237,7 @@ class CharacterWeapon extends React.Component {
                                 <th ></th>
                             </tr>
                         </thead>
-                        <tbody class="scroll">
+                        <tbody className="scroll">
                             {this.renderOptions(this.state.secondaryList, this.changeSecondary)}
                         </tbody>
                         <tbody >

@@ -153,8 +153,8 @@ class CharacterClass extends React.Component {
 
     render() {
         return (
-            <div class="character-class-container">
-                <table class="character-class-table">
+            <div className="character-class-container">
+                <table className="character-class-table">
                     <thead>
                         <tr>
                             <th style={{flexGrow: 0.9}}></th>
@@ -165,7 +165,7 @@ class CharacterClass extends React.Component {
                             <th style={{flexGrow: 1}}></th>
                         </tr>
                     </thead>
-                    <tbody class="scroll">
+                    <tbody className="scroll">
                         {this.renderOptions(this.state.classList)}
                     </tbody>
                     <tbody >

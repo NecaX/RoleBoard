@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CharacterWeapon from './CharacterWeapon';
 import CharacterSkill from './CharacterSkill';
 import CharacterFeat from './CharacterFeat';
+import CharacterSummary from './CharacterSummary';
 
 
 class CreateCharacter extends React.Component {
@@ -20,7 +21,7 @@ class CreateCharacter extends React.Component {
         this.handleClick = this.handleClick.bind(this)
         this.setPage = this.setPage.bind(this)
         this.state = {
-            page: 5
+            page: 6
         }
     }
 
@@ -60,6 +61,8 @@ class CreateCharacter extends React.Component {
             case 5:
                 return <CharacterFeat/>
                 break;
+            case 6: 
+                return <CharacterSummary/>
             default:
                 return <div>Hola caracola</div>
         }

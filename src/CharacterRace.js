@@ -358,8 +358,8 @@ class CharacterRace extends React.Component {
 
     render() {
         return (
-            <div class="character-race-container">
-                <table class="character-race-table">
+            <div className="character-race-container">
+                <table className="character-race-table">
                     <thead>
                         <tr>
                             <th style={{flexGrow: 1}}></th>
@@ -369,14 +369,14 @@ class CharacterRace extends React.Component {
                             <th style={{flexGrow: 1}}></th>
                         </tr>
                     </thead>
-                    <tbody class="scroll">
+                    <tbody className="scroll">
                         {this.renderOptions(this.state.classList)}
                     </tbody>
                     <tbody >
                         {this.renderChosen(this.state.classList[this.state.raceChosen])}
                     </tbody>
                 </table>
-                <div class="character-race-ability">
+                <div className="character-race-ability">
                     <table className="character-race-ability-table">
                         <thead>
                             <tr>

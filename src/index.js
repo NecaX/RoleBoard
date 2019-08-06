@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './Login';
+import './Util.js';
 import App from './App';
 import SelectGameMode from './SelectGameMode';
 import CreateCharacter from './CreateCharacter';

@@ -3,7 +3,6 @@ import './CharacterGeneral.css';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/styles';
 import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
-import { fontFamily } from '@material-ui/system';
 
 
 class CharacterGeneral extends React.Component {
