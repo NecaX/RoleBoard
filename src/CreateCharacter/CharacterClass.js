@@ -2,9 +2,9 @@ import React from 'react';
 import './CharacterClass.css';
 import Info from '@material-ui/icons/Info'
 import Avatar from '@material-ui/core/Avatar';
-import barb from './img/barbarian.png'
-import wiz from './img/wizard.png'
-import bard from './img/bard.png'
+import barb from '../img/barbarian.png'
+import wiz from '../img/wizard.png'
+import bard from '../img/bard.png'
 
 class CharacterClass extends React.Component {
 

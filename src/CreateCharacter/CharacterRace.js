@@ -2,10 +2,10 @@ import React from 'react';
 import './CharacterRace.css';
 import Info from '@material-ui/icons/Info'
 import Avatar from '@material-ui/core/Avatar';
-import elf from './img/elf.png'
-import dwarf from './img/dwarf.png'
-import gnome from './img/gnome.png'
-import onedice from './img/one-dice.png';
+import elf from '../img/elf.png'
+import dwarf from '../img/dwarf.png'
+import gnome from '../img/gnome.png'
+import onedice from '../img/one-dice.png';
 import Fab from '@material-ui/core/Fab';
 
 const abilities = [

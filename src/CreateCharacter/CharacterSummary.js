@@ -1,11 +1,11 @@
 import React from 'react';
 import './CharacterSummary.css';
-import human from './img/human.png'
-import fighter from './img/fighter.png'
-import spear from './img/spear.png'
-import dagger from './img/dagger.png'
+import human from '../img/human.png'
+import fighter from '../img/fighter.png'
+import spear from '../img/spear.png'
+import dagger from '../img/dagger.png'
 import Avatar from '@material-ui/core/Avatar';
-import av from './img/newimg.webp'
+import av from '../img/newimg.webp'
 
 import AddPhotoAlternate from '@material-ui/icons/AddPhotoAlternate'
 

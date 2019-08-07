@@ -2,10 +2,10 @@ import React from 'react';
 import './CharacterWeapon.css';
 import Info from '@material-ui/icons/Info'
 import Avatar from '@material-ui/core/Avatar';
-import dagger from './img/dagger.png'
-import crossbow from './img/crossbow.png'
-import spear from './img/spear.png'
-import club from './img/club.png'
+import dagger from '../img/dagger.png'
+import crossbow from '../img/crossbow.png'
+import spear from '../img/spear.png'
+import club from '../img/club.png'
 
 
 class CharacterWeapon extends React.Component {

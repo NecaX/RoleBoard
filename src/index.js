@@ -5,7 +5,7 @@ import Login from './Login';
 import './Util.js';
 import App from './App';
 import SelectGameMode from './SelectGameMode';
-import CreateCharacter from './CreateCharacter';
+import CreateCharacter from './CreateCharacter/CreateCharacter';
 
 import {
     HashRouter,
