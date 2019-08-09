@@ -10,10 +10,7 @@ class CharacterClass extends React.Component {
 
     constructor(props) {
         super(props); //Constructor padre
-        this.changeSelected = this.changeSelected.bind(this);
-        this.renderOptions = this.renderOptions.bind(this);
         this.state = {
-            classChosen: 0,
             classList: [
                 {
                     icon: barb,
@@ -121,7 +118,7 @@ class CharacterClass extends React.Component {
 
         return array.map((charclass, index) => {
             return (
-                <tr onClick={() => this.changeSelected(index)}>
+                <tr key={index} onClick={() => this.props.modifyFunction(charclass['icon'], charclass['name'], index)}>
                     <td style={{flexGrow: 1}}><Avatar src={charclass['icon']} /></td>
                     <td style={{flexGrow: 2}}>{charclass['name']}</td>
                     <td style={{flexGrow: 1}}>{charclass['dice']}</td>
@@ -130,12 +127,6 @@ class CharacterClass extends React.Component {
                     <td style={{flexGrow: 1}}><Info style={{ color: 'rgba(0,0,0,0.4)' }} /></td>
                 </tr>
             )
-        })
-    }
-
-    changeSelected(index) {
-        this.setState({
-            classChosen: index,
         })
     }
 
@@ -169,7 +160,8 @@ class CharacterClass extends React.Component {
                         {this.renderOptions(this.state.classList)}
                     </tbody>
                     <tbody >
-                        {this.renderChosen(this.state.classList[this.state.classChosen])}
+                        {/* Show selected class only if some is selected */}
+                        {this.props.data['classChosen'] >= 0 ? this.renderChosen(this.state.classList[this.props.data['classChosen']]) : <div/>}
                     </tbody>
                 </table>
             </div>

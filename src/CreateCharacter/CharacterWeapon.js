@@ -159,7 +159,7 @@ class CharacterWeapon extends React.Component {
 
         return array.map((charweapon, index) => {
             return (
-                <tr onClick={() => changeSelected(index)}>
+                <tr key={index} onClick={() => changeSelected(charweapon['icon'], charweapon['name'], index)}>
                     <td style={{ flexGrow: 1 }}><Avatar style={{ borderRadius: 0 }} src={charweapon['icon']} /></td>
                     <td style={{ flexGrow: 4 }}>{charweapon['name']}</td>
                     <td style={{ flexGrow: 3 }}>{charweapon['cat']}</td>
@@ -215,10 +215,10 @@ class CharacterWeapon extends React.Component {
                             </tr>
                         </thead>
                         <tbody className="scroll">
-                            {this.renderOptions(this.state.primaryList, this.changePrimary)}
+                            {this.renderOptions(this.state.primaryList, this.props.modifyPrimary)}
                         </tbody>
                         <tbody >
-                            {this.renderChosen(this.state.primaryList[this.state.primaryChosen])}
+                            {this.props.primweapon['primaryChosen'] >= 0 ? this.renderChosen(this.state.primaryList[this.props.primweapon['primaryChosen']]) : <div/>}
                         </tbody>
                     </table>
                 </div>
@@ -238,10 +238,10 @@ class CharacterWeapon extends React.Component {
                             </tr>
                         </thead>
                         <tbody className="scroll">
-                            {this.renderOptions(this.state.secondaryList, this.changeSecondary)}
+                            {this.renderOptions(this.state.secondaryList, this.props.modifySecondary)}
                         </tbody>
                         <tbody >
-                            {this.renderChosen(this.state.secondaryList[this.state.secondaryChosen])}
+                            {this.props.secweapon['secondaryChosen'] >= 0 ? this.renderChosen(this.state.secondaryList[this.props.secweapon['secondaryChosen']]) : <div/>}
                         </tbody>
                     </table>
                 </div>

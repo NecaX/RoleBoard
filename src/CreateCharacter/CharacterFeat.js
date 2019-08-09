@@ -11,51 +11,92 @@ class CharacterFeat extends React.Component {
         this.addFeat = this.addFeat.bind(this);
         this.removeFeat = this.removeFeat.bind(this);
         this.state = {
-            featsLeft: 2,
-            maxRank: 5,
             featsList: [
                 {
                     name: 'Acrobatic',
                     desc: '+2 bonus on Acrobatics and Fly checks',
-                    type: 'General'
+                    type: 'General',
+                    bonus: {
+                        'Acrobatics': 2,
+                        'Fly': 2
+                    }
                 },
                 {
                     name: 'Agile Maneuvers',
                     desc: 'Use your Dex bonus when calculating your CMB',
-                    type: 'Combat'
+                    type: 'Combat',
+                    bonus: {}
                 },
                 {
                     name: 'Empower Spell',
                     desc: 'Increase spell variables by 50%, +2 Spell level',
-                    type: 'Metamagic'
+                    type: 'Metamagic',
+                    bonus: {}
                 },
                 {
                     name: 'Alertness',
                     desc: '+2 bonus on Perception and Sense Motive checks',
-                    type: 'General'
+                    type: 'General',
+                    bonus: {
+                        'Perception': 2,
+                        'Sense Motive': 2
+                    }
                 },
                 {
                     name: 'Acrobatic',
                     desc: '+2 bonus on Acrobatics and Fly checks',
-                    type: 'General'
+                    type: 'General',
+                    bonus: {
+                        'Acrobatics': 2,
+                        'Fly': 2
+                    }
                 },
                 {
                     name: 'Acrobatic',
                     desc: '+2 bonus on Acrobatics and Fly checks',
-                    type: 'General'
+                    type: 'General',
+                    bonus: {
+                        'Acrobatics': 2,
+                        'Fly': 2
+                    }
                 },
                 {
                     name: 'Acrobatic',
                     desc: '+2 bonus on Acrobatics and Fly checks',
-                    type: 'General'
+                    type: 'General',
+                    bonus: {
+                        'Acrobatics': 2,
+                        'Fly': 2
+                    }
                 },
                 {
                     name: 'Acrobatic',
                     desc: '+2 bonus on Acrobatics and Fly checks',
-                    type: 'General'
+                    type: 'General',
+                    bonus: {
+                        'Acrobatics': 2,
+                        'Fly': 2
+                    }
+                },
+                {
+                    name: 'Acrobatic',
+                    desc: '+2 bonus on Acrobatics and Fly checks',
+                    type: 'General',
+                    bonus: {
+                        'Acrobatics': 2,
+                        'Fly': 2
+                    }
+                },
+                {
+                    name: 'Acrobatic',
+                    desc: '+2 bonus on Acrobatics and Fly checks',
+                    type: 'General',
+                    bonus: {
+                        'Acrobatics': 2,
+                        'Fly': 2
+                    }
                 },
             ],
-            featsSelected: new Set([])
         }
     }
 
@@ -64,7 +105,7 @@ class CharacterFeat extends React.Component {
         return array.map((charfeat, index) => {
 
             return (
-                <tr onClick={() => this.addFeat(index)}>
+                <tr key={index} onClick={() => this.addFeat(index)}>
                     <td style={{flexGrow: 3}}>{charfeat['name']}</td>
                     <td style={{flexGrow: 6}}>{charfeat['desc']}</td>
                     <td style={{flexGrow: 3}}>{charfeat['type']}</td>
@@ -75,46 +116,39 @@ class CharacterFeat extends React.Component {
     }
 
     addFeat(index) {
-        var newFeat = this.state.featsList[index]['name']
-        if(this.state.featsLeft > 0 && !this.state.featsSelected.has(newFeat)){
-            var newSet = this.state.featsSelected
+        var newFeat = this.state.featsList[index]
+        if(this.props.data['featsLeft'] > 0 && !this.props.data['featsSelected'].has(newFeat)){
+            var newSet = this.props.data['featsSelected']
             newSet.add(newFeat)
-            this.setState({
-                featsSelected: newSet,
-                featsLeft: this.state.featsLeft - 1
-            })
+            this.props.modifyFunction('featsSelected', newSet)
+            this.props.modifyFunction('featsLeft', this.props.data['featsLeft'] - 1)
         }
     }
 
     removeFeat(feat) {
-        var newSet = this.state.featsSelected
+        var newSet = this.props.data['featsSelected']
         newSet.delete(feat)
-        this.setState({
-            featsSelected: newSet,
-            featsLeft: this.state.featsLeft + 1
-        })
+        this.props.modifyFunction('featsSelected', newSet)
+        this.props.modifyFunction('featsLeft', this.props.data['featsLeft'] + 1)
     }
 
     renderSelected() {
-        return [...this.state.featsSelected].map((feat, index) => {
+        return [...this.props.data['featsSelected']].map((feat, index) => {
 
             return (
-                <tr>
-                    <td style={{flexGrow: 4}}>{feat}</td>
+                <tr key={index}>
+                    <td style={{flexGrow: 4}}>{feat['name']}</td>
                     <td style={{flexGrow: 1}}><Close onClick={() => this.removeFeat(feat)} style={{ color: '#d33f49' }} /></td>
                 </tr>
             )
         })
     }
 
-
-
-
     render() {
         return (
             <div className="character-feat-container">
                     <div className="character-feat-header">
-                        <div className="character-feat-points">Feats remaining: {this.state.featsLeft}</div>
+                        <div className="character-feat-points">Feats remaining: {this.props.data['featsLeft']}</div>
                     </div>
                     <div className="character-feat-body">
                         <table className="character-feat-table">

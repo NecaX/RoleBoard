@@ -29,7 +29,7 @@ class SelectGameMode extends React.Component {
   renderOptions(array){
     return array.map((game, index) => {
       return(
-        <option value={game}>{game}</option>
+        <option key={index} value={game}>{game}</option>
       )
     })
   }
@@ -122,7 +122,7 @@ class SelectGameMode extends React.Component {
 
           <div className='continue-button'>
               <this.GreenFab variant="extended" aria-label="Delete" onClick={() => this.navigate('/cch')}>
-              <img src={sword} style={{width: '30px', paddingRight: 10}} />
+              <img alt="" src={sword} style={{width: '30px', paddingRight: 10}} />
                 Join a new Adventure
               </this.GreenFab>
           </div>

@@ -13,6 +13,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withRouter } from 'react-router-dom';
+import {serverAddress} from './Util.js'
 
 class Login extends React.Component {
 
@@ -81,7 +82,7 @@ class Login extends React.Component {
       // Login successful
       // Hacemos una peticion al server para preguntar si hay algun usuario ya creado con este nombre
       var data = {'username': this.state.newUsername, 'pass': this.state.newPassword}
-      fetch('http://localhost:8081/signup', {
+      fetch(serverAddress + '/signup', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -118,7 +119,7 @@ class Login extends React.Component {
   login(){
     var data = {'username': this.state.username, 'pass': this.state.password}
       // Creamos una peticion al servidor para ver si el usuario y pass son adecuadas
-      fetch('http://localhost:8081/login', {
+      fetch(serverAddress + '/login', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -175,7 +176,7 @@ class Login extends React.Component {
     return (
       <div className="login-container">
         <div>
-          <img src={dice}  className="dice-logo"/>
+          <img alt="" src={dice}  className="dice-logo"/>
         </div>
         <div className="text-field">
           <label className="pure-material-textfield-outlined">

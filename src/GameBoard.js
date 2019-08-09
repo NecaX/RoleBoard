@@ -49,7 +49,7 @@ class GameBoard extends React.Component {
 
     return [...Array(this.props.columns)].map((x, i) =>{
       return(
-        <GameSquare x={i} y={row} content={myTable[i][row]} myself={this.props.playerId == myTable[i][row]} myTurn={this.props.myTurn} handleClick={(x,y) => this.props.handleClick(x,y)}/>
+        <GameSquare x={i} y={row} content={myTable[i][row]} myself={this.props.playerId === myTable[i][row]} myTurn={this.props.myTurn} handleClick={(x,y) => this.props.handleClick(x,y)}/>
       )
     })
   }

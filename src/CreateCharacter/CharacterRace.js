@@ -179,7 +179,7 @@ class CharacterRace extends React.Component {
     renderOptions(array) {
         return array.map((charclass, index) => {
             return (
-                <tr onClick={() => this.changeSelected(index)}>
+                <tr key={index} onClick={() => this.changeSelected(index)}>
                     <td style={{flexGrow: 1}}><Avatar style={{borderRadius:'0'}} src={charclass['icon']} /></td>
                     <td style={{flexGrow: 2}}>{charclass['name']}</td>
                     <td style={{flexGrow: 3}}>{this.renderMod(charclass['mod'])}</td>
@@ -196,7 +196,7 @@ class CharacterRace extends React.Component {
      */
     renderMod(mod) {
         return Object.keys(mod).sort((a, b) => {return a.length - b.length - mod[a] + mod[b]}).map((char, index) => {
-            return <div>{char}: {mod[char]}</div>
+            return <div key={index}>{char}: {mod[char]}</div>
         })
     }
 
@@ -205,11 +205,12 @@ class CharacterRace extends React.Component {
      * @param {Array} traits Array de rasgos raciales
      */
     renderTraits(traits) {
+        //eslint-disable-next-line
         return traits.map((trait, index) => {
             if(index < 2){
-                return <div>{trait}</div>
+                return <div key={index}>{trait}</div>
             } else if (index === 2){
-                return <div>...</div>
+                return <div key={index}>...</div>
             }
         })
     }
@@ -219,10 +220,15 @@ class CharacterRace extends React.Component {
      */
     renderAbilities() {
         return abilities.map((ability, index) => {
-            // Si la raza elegida tiene modificador para esta habilidad se pone, si no se toma 0
-            var racemod = this.state.classList[this.state.raceChosen]['mod'][ability] ? this.state.classList[this.state.raceChosen]['mod'][ability] : 0
+            // Si hay raza elegida, y la raza elegida tiene modificador para esta habilidad se pone, si no se toma 0
+            if(this.props.data.raceChosen >= 0 && this.state.classList[this.props.data.raceChosen]['mod'][ability]){
+                var racemod = this.state.classList[this.props.data.raceChosen]['mod'][ability]
+            } else{
+                racemod = 0
+            }
+
             // Si se ha escogido un valor de la tirada de dados se pone, si no se toma 0
-            var score = (parseInt(this.state.scores[index])-1) >= 0 ? this.state.genScores[parseInt(this.state.scores[index])-1] : 0
+            var score = (parseInt(this.props.data['scores'][index])-1) >= 0 ? this.props.data['genScores'][parseInt(this.props.data['scores'][index])-1] : 0
             var colorClass = ''
             // Dependiendo de la tirada elegida, cambia el color de la casilla
             if(racemod + score < 7) {
@@ -236,14 +242,14 @@ class CharacterRace extends React.Component {
             }
 
             return (
-                <tr>
+                <tr key={index}>
                     <td>{ability}</td>
                     <td>
                         {/* El select se activa cuando se ha tirado el dado */}
-                        <select disabled={!this.state.rolledDice} className="class-race-ability-select" onChange={(event) => this.modifyScore(event.target.value, index)}>
+                        <select value={this.props.data['scores'][index]} disabled={!this.props.data['rolledDice']} className="class-race-ability-select" onChange={(event) => this.modifyScore(event.target.value, index, ability, racemod)}>
                             {/* Los valores del select son los indices, para llevar control de que tirada se ha usado. El indice 0 se usa para el placeholder */}
                             <option value={0}>---</option>
-                            {this.renderScores(this.state.genScores)}
+                            {this.renderScores(this.props.data['genScores'])}
                         </select>
                     </td>
                     <td className="character-race-ability-number">
@@ -280,19 +286,26 @@ class CharacterRace extends React.Component {
      * Funcion que se activa al tirar el dado
      */
     rollDice() {
-        this.setState({
-            genScores: this.generateScores(),
-            rolledDice: true,
-        })
+        this.props.modifyFunction('genScores', this.generateScores())
+        this.props.modifyFunction('rolledDice', true)
     }
 
     /**
      * Funcion que controla la raza seleccionada
+     * Ademas, mantiene un diccionario con las puntuaciones de habilidades actualizado cuando cambia la clase
+     * y en consecuencia cambian muchas puntuaciones
      */
     changeSelected(index) {
-        this.setState({
-            raceChosen: index,
+        this.props.modifyFunction('raceChosen', index)
+        this.props.modifyFunction('name', this.state.classList[index]['name'])
+        this.props.modifyFunction('icon', this.state.classList[index]['icon'])
+        var newDict = this.props.data.abilities
+        abilities.forEach((ability, index) => {
+            var score = (parseInt(this.props.data['scores'][index])-1) >= 0 ? this.props.data['genScores'][parseInt(this.props.data['scores'][index])-1] : 0
+            var racemod = this.state.classList[this.props.data.raceChosen]['mod'][ability] ? this.state.classList[this.props.data.raceChosen]['mod'][ability] : 0
+            newDict[ability] = score + racemod
         })
+        this.props.modifyFunction('abilities', newDict)
     }
 
     /**
@@ -302,22 +315,24 @@ class CharacterRace extends React.Component {
     renderScores(array) {
         return array.sort((a,b) => {return a - b}).map((score, index) => {
             return (
-                <option value={index+1} disabled={this.state.selSc.has(index+1)} >{score}</option>
+                <option key={index} value={index+1} disabled={this.props.data['selSc'].has(index+1)} >{score}</option>
             )
         })
     }
 
     /**
      * Funcion que se llama cuando se modifica una nueva tirada
-     * Se actualiza el set de tiradas escogidas y el array de caracteristicas
+     * Se actualiza el set de tiradas escogidas y el diccionario de caracteristicas
      */
-    modifyScore(value, index) {
-        var newScores = this.state.scores
+    modifyScore(value, index, ability, racemod) {
+        var newScores = this.props.data['scores']
         this.selectedScores(newScores[index], value)
         newScores[index] = value
-        this.setState({
-            scores: newScores
-        })
+        var score = (parseInt(this.props.data['scores'][index])-1) >= 0 ? this.props.data['genScores'][parseInt(this.props.data['scores'][index])-1] : 0
+        var newDict = this.props.data.abilities
+        newDict[ability] = racemod + score
+        this.props.modifyFunction('scores', newScores)
+        this.props.modifyFunction('abilities', newDict)
     }
 
     /**
@@ -328,7 +343,7 @@ class CharacterRace extends React.Component {
      * @param {String} next Nuevo indice
      */
     selectedScores(prev, next){
-        var newSet = this.state.selSc
+        var newSet = this.props.data['selSc']
         if (newSet.has(parseInt(prev))){
             newSet.delete(parseInt(prev))
         }
@@ -336,10 +351,7 @@ class CharacterRace extends React.Component {
             newSet.add(parseInt(next))
         }
 
-        this.setState({
-            selSc: newSet,
-        })
-        console.log(this.state.selSc)
+        this.props.modifyFunction('selSc', newSet)
     }
 
     /**
@@ -373,7 +385,7 @@ class CharacterRace extends React.Component {
                         {this.renderOptions(this.state.classList)}
                     </tbody>
                     <tbody >
-                        {this.renderChosen(this.state.classList[this.state.raceChosen])}
+                        {this.props.data['raceChosen'] >= 0 ? this.renderChosen(this.state.classList[this.props.data['raceChosen']]) : <div/>}
                     </tbody>
                 </table>
                 <div className="character-race-ability">
@@ -390,7 +402,7 @@ class CharacterRace extends React.Component {
                             {this.renderAbilities()}
                         </tbody>
                     </table>
-                    <Fab disabled={this.state.rolledDice} variant="extended" style={{fontFamily: 'Luminari'}} onClick={this.rollDice}>
+                    <Fab disabled={this.props.data['rolledDice']} variant="extended" style={{fontFamily: 'Luminari'}} onClick={this.rollDice}>
                         <Avatar src={onedice} style={{paddingRight: 20}}/>
                         Get the scores
                     </Fab>

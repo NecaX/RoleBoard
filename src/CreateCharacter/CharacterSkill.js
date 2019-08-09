@@ -10,8 +10,6 @@ class CharacterSkill extends React.Component {
         this.renderOptions = this.renderOptions.bind(this);
         this.updateRank = this.updateRank.bind(this);
         this.state = {
-            pointsLeft: 10,
-            maxRank: 5,
             skillsList: [
                 {
                     name: 'Acrobatics',
@@ -52,10 +50,7 @@ class CharacterSkill extends React.Component {
                 'Wisdom': 1,
                 'Charisma': 2,
             },
-            bonusMod: {
-                'Acrobatics': 2,
-                'Diplomacy': 1,
-            }
+            bonusMod: {}
         }
     }
 
@@ -63,31 +58,62 @@ class CharacterSkill extends React.Component {
 
         return array.map((charskill, index) => {
             var bonus = this.state.bonusMod[charskill['name']] ? this.state.bonusMod[charskill['name']] : 0
-
+            var abilityMod = this.state.charMod[charskill['char']]
+            var score = this.props.data.skillsSelected[charskill['name']] ? this.props.data.skillsSelected[charskill['name']] : 0
+            var finalScore = abilityMod + bonus + score
             return (
-                <tr>
+                <tr key={index}>
                     <td >{charskill['name']}</td>
                     <td >{charskill['char']}</td>
-                    <td ><input className="character-skill-input" type='number' onChange={(event) => this.updateRank(event.target.value, index)} value={charskill['rank']} min={0} max={this.state.maxRank} onKeyDown={(e) => {e.preventDefault()}}></input></td>
-                    <td >{this.state.charMod[charskill['char']]}</td>
+                    <td ><input className="character-skill-input" type='number' onChange={(event) => this.updateRank(event.target.value, charskill['name'], score)} value={score} min={0} max={this.props.data.maxRank} onKeyDown={(e) => {e.preventDefault()}}></input></td>
+                    <td >{abilityMod}</td>
                     <td >{bonus}</td>
-                    <td >{this.state.charMod[charskill['char']] + bonus + charskill['rank']}</td>
+                    <td >{finalScore}</td>
                     <td style={{flexGrow: 0.8}}><Info style={{ color: 'rgba(0,0,0,0.4)' }} /></td>
                 </tr>
             )
         })
     }
 
-    updateRank(value, index){
-        var newSkills = this.state.skillsList
-        value = parseInt(value)
-        var diff = value - newSkills[index]['rank'] 
-        if(this.state.pointsLeft - diff >= 0){
-            newSkills[index]['rank'] = value
-            this.setState({
-                skillsList: newSkills,
-                pointsLeft: this.state.pointsLeft - diff
+    /**
+     * Cuando carga el componente, se actualiza el diccionario de puntos bonus por clase, raza
+     * dotes, etc
+     */
+    componentDidMount(){
+        var newBonus = {}
+
+        this.props.feats.forEach((feat, index) => {
+            Object.keys(feat.bonus).forEach((skill, j) => {
+                if(newBonus[skill]){
+                    newBonus[skill] += feat.bonus[skill]
+                }else {
+                    newBonus[skill] = feat.bonus[skill]
+                }
+                
             })
+        })
+
+        this.setState({
+            bonusMod: newBonus
+        })
+    }
+
+
+    /**
+     * Funcion que actualiza y mantiene un diccionario con las puntuaciones de cada rango.
+     * Verifica antes de actualizar que queden puntos a asignar
+     * @param {Nuevo rango} value 
+     * @param {Nombre de la habilidad} name 
+     * @param {Rango original} originalValue 
+     */
+    updateRank(value, name, originalValue){
+        var newSkills = this.props.data.skillsSelected
+        value = parseInt(value)
+        var diff = value - originalValue
+        if(this.props.data.pointsLeft - diff >= 0){
+            newSkills[name] = value
+            this.props.modifyFunction('skillsSelected', newSkills)
+            this.props.modifyFunction('pointsLeft', this.props.data.pointsLeft - diff)
         }
 
     }
@@ -97,8 +123,7 @@ class CharacterSkill extends React.Component {
         return (
             <div className="character-skill-container">
                     <div className="character-skill-header">
-                        <div className="character-skill-points">Points remaining: {this.state.pointsLeft}</div>
-
+                        <div className="character-skill-points">Points remaining: {this.props.data.pointsLeft}</div>
                     </div>
                     <table className="character-skill-table">
                         <thead>

@@ -142,7 +142,7 @@ class App extends React.Component {
   isMyTurn(){
     for (var elem in this.state.players){
       if (this.state.players[elem]['id'] === this.state.playerId){
-        return (this.state.cycle % Object.keys(this.state.players).length == this.state.players[elem]['turn']);
+        return (this.state.cycle % Object.keys(this.state.players).length === this.state.players[elem]['turn']);
       }
     }
   }
