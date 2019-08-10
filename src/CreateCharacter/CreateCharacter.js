@@ -12,6 +12,7 @@ import CharacterWeapon from './CharacterWeapon';
 import CharacterSkill from './CharacterSkill';
 import CharacterFeat from './CharacterFeat';
 import CharacterSummary from './CharacterSummary';
+import { serverAddress } from '../Util'
 
 
 class CreateCharacter extends React.Component {
@@ -28,7 +29,7 @@ class CreateCharacter extends React.Component {
         this.modifySecWeapon = this.modifySecWeapon.bind(this)
         this.modifySkill = this.modifySkill.bind(this)
         this.state = {
-            page: 5,
+            page: 0,
             general: {
                 name: '',
                 align: '',
@@ -149,9 +150,36 @@ class CreateCharacter extends React.Component {
     }
 
     handleClick() {
-        this.setState({
-            page: (this.state.page + 1) % 7
+        if (this.state.page < 6){
+            this.setState({
+                page: (this.state.page + 1)
+            })
+        }else {
+            this.saveCharacter()
+        }
+    }
+
+    saveCharacter() {
+        var character = {}
+        character.general = this.state.general
+        delete character.general.pictureLoaded
+        character.class = this.state.class.name
+        character.race = this.state.race.name
+        character.abilities = this.state.race.abilities
+        character.primweapon = this.state.primweapon.name
+        character.secweapon = this.state.secweapon.name
+        character.featsSelected = [...this.state.feats.featsSelected]
+        character.skillsSelected = this.state.skills.skillsSelected
+
+        fetch(`${serverAddress}/create-character`, {
+            method: 'POST', 
+            body: JSON.stringify(character),
+            headers: {
+                'Content-type': 'application/json'
+            }
         })
+        .then(res => res.json())
+        .then(res => console.log(res)) //TODO: Comportamiento en caso de fallo
     }
 
     setPage(targetPage) {
@@ -181,11 +209,11 @@ class CreateCharacter extends React.Component {
             case 4:
                 return <CharacterFeat modifyFunction={this.modifyFeat} data={this.state.feats} />
             case 5:
-                return <CharacterSkill feats={this.state.feats.featsSelected} data={this.state.skills} modifyFunction={this.modifySkill} />
+                return <CharacterSkill abilities={this.state.race.abilities} feats={this.state.feats.featsSelected} data={this.state.skills} modifyFunction={this.modifySkill} />
             case 6:
                 return <CharacterSummary general={this.state.general} class={this.state.class} race={this.state.race} primweapon={this.state.primweapon} secweapon={this.state.secweapon} featsList={this.state.feats.featsSelected} skillList={this.state.skills.skillsSelected} />
             default:
-                return <div>Hola caracola</div>
+                return <div/>
         }
     }
 

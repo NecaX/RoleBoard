@@ -2,4 +2,4 @@
 // y no se cierra hasta que el servidor no muere
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://roleboard:roleboard@roleboard-idq8m.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://roleboard:roleboard@roleboard-idq8m.mongodb.net/RoleBoard?retryWrites=true&w=majority', { useNewUrlParser: true });

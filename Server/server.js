@@ -8,6 +8,7 @@ require('./ws.js')
 // Logica de la bbdd y los modelos
 require('./database.js')
 const User = require('./Models/User.js')
+const Character = require('./Models/Character.js')
 
 // App sera el controlador de rutas para el acceso a distintas partes del servidor
 // que no tenga que ver con el WebSocket
@@ -109,6 +110,18 @@ app.post('/avatar-upload', upload.single('myFile'), (req, res, next) => {
   // La funcion json manda una respuesta en ese formato, en lugar de res.send(JSON.stringify...)
     res.json({path: file.path})
 })
+
+/**
+ * Funcion para subir un nuevo personaje a la BBDD
+ */
+app.post('/create-character', (req, res) => {
+  var newChar = new Character(req.body)
+  newChar.save(function(err, res){
+    if(err) throw err;
+  })
+  res.send({'success': true})
+})
+
 
 // El servidor estara funcionando en el puerto 8081 para no interferir con el servidor WebSocket
 var server = app.listen(8081, function (){

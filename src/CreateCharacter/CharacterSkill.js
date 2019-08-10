@@ -14,42 +14,29 @@ class CharacterSkill extends React.Component {
                 {
                     name: 'Acrobatics',
                     char: 'Dexterity',
-                    rank: 0
                 },
                 {
                     name: 'Appraise',
                     char: 'Intelligence',
-                    rank: 0
                 },
                 {
                     name: 'Bluff',
                     char: 'Charisma',
-                    rank: 0
                 },
                 {
                     name: 'Climb',
                     char: 'Strength',
-                    rank: 0
                 },
                 {
                     name: 'Diplomacy',
                     char: 'Charisma',
-                    rank: 0
                 },
                 {
                     name: 'Disable device',
                     char: 'Dexterity',
-                    rank: 0
                 },
             ],
-            charMod: {
-                'Strength': 0,
-                'Dexterity': 1,
-                'Constitution': 3,
-                'Intelligence': 2,
-                'Wisdom': 1,
-                'Charisma': 2,
-            },
+            charMod: {},
             bonusMod: {}
         }
     }
@@ -93,8 +80,15 @@ class CharacterSkill extends React.Component {
             })
         })
 
+        var newCharMod = {}
+
+        Object.keys(this.props.abilities).forEach((ability, index) => {
+            newCharMod[ability] = Math.floor(this.props.abilities[ability]/2) - 5
+        })
+
         this.setState({
-            bonusMod: newBonus
+            bonusMod: newBonus,
+            charMod: newCharMod
         })
     }
 
@@ -102,9 +96,9 @@ class CharacterSkill extends React.Component {
     /**
      * Funcion que actualiza y mantiene un diccionario con las puntuaciones de cada rango.
      * Verifica antes de actualizar que queden puntos a asignar
-     * @param {Nuevo rango} value 
-     * @param {Nombre de la habilidad} name 
-     * @param {Rango original} originalValue 
+     * @param {String} value Nuevo rango (proviene de input, es un String que pasa a int)
+     * @param {String} name Nombre de la habilidad
+     * @param {int} originalValue Rango original
      */
     updateRank(value, name, originalValue){
         var newSkills = this.props.data.skillsSelected

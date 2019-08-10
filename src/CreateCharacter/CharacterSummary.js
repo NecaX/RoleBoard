@@ -1,9 +1,5 @@
 import React from 'react';
 import './CharacterSummary.css';
-import human from '../img/human.png'
-import fighter from '../img/fighter.png'
-import spear from '../img/spear.png'
-import dagger from '../img/dagger.png'
 import Avatar from '@material-ui/core/Avatar';
 import {serverAddress} from '../Util'
 
@@ -111,9 +107,8 @@ class CharacterSummary extends React.Component {
     renderFeats(featsList) {
         return([...featsList]).map((feat, index) => {
             return (
-                <div key={index} className="character-summary-bottom-row">{feat}</div>
+                <div key={index} className="character-summary-bottom-row">{feat.name}</div>
             )
-
         })
     }
 
