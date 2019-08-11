@@ -1,0 +1,15 @@
+{
+    "icon": "img/elf.png",
+    "name": "Elf",
+    "mod": {
+        "Dexterity": 2,
+        "Intelligence": 2,
+        "Constitution": -2
+    },
+    "traits": [
+        "Low-Light Vision",
+        "Elven Immunities",
+        "Elven Magic"
+    ],
+    "extra": {}
+}

@@ -1,0 +1,8 @@
+{
+    "icon": "img/barbarian.png",
+    "name": "Barbarian",
+    "dice": "d12",
+    "role": "Physical fighter, not talkative",
+    "ability": "Strength",
+    "extra": {}
+}

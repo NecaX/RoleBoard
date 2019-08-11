@@ -1,0 +1,9 @@
+{
+    "icon": "img/longspear.png",
+    "name": "Longspear",
+    "cat": "Two-Handed",
+    "type": "Simple",
+    "dmg": "1d8",
+    "crit": "x3",
+    "extra": {}
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Acrobatic",
+    "desc": "+2 bonus on Acrobatics and Fly checks",
+    "type": "General",
+    "bonus": {
+        "Acrobatics": 2,
+        "Fly": 2
+    },
+    "extra": {}
+}

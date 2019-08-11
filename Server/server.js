@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const formData = require('express-form-data');
 const multer = require('multer');
 // Logica del servidor de websocket
 require('./ws.js')
