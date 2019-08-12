@@ -96,7 +96,7 @@ class SelectGameMode extends React.Component {
           </div>
 
           <div className='continue-button'>
-              <this.GreenFab variant="extended" aria-label="Delete" >
+              <this.GreenFab variant="extended" aria-label="Delete" onClick={() => this.navigate('/create-campaign/'+this.props.match.params.username)}>
                 <Create style={{paddingRight: 10}}/>
                 Create a new Adventure
               </this.GreenFab>
@@ -121,7 +121,7 @@ class SelectGameMode extends React.Component {
           </div>
 
           <div className='continue-button'>
-              <this.GreenFab variant="extended" aria-label="Delete" onClick={() => this.navigate('/cch')}>
+              <this.GreenFab variant="extended" aria-label="Delete" onClick={() => this.navigate('/cch/'+ this.props.match.params.username)}>
               <img alt="" src={sword} style={{width: '30px', paddingRight: 10}} />
                 Join a new Adventure
               </this.GreenFab>

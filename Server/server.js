@@ -1,13 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+
+var {generateCode} = require('./Util.js');
+
 // Logica del servidor de websocket
 require('./ws.js')
 
 // Logica de la bbdd y los modelos
 require('./database.js')
 const User = require('./Models/User.js')
-const Character = require('./Models/Character.js')
+const {CharacterModel} = require('./Models/Character.js')
+const { CampaignModel } = require('./Models/Campaign.js')
 
 // App sera el controlador de rutas para el acceso a distintas partes del servidor
 // que no tenga que ver con el WebSocket
@@ -34,6 +38,15 @@ app.use('/img', express.static('img'))
  */
 app.get('/', function (req, res) {
   var obj = {'id': 'prueba'}
+  res.send(JSON.stringify(obj));
+})
+
+/**
+ * Ruta para obtener un codigo unico para una nueva partida
+ */
+app.get('/generate-code', function (req, res) {
+  var code = generateCode();
+  var obj = {'success': true, 'code': code}
   res.send(JSON.stringify(obj));
 })
 
@@ -114,11 +127,22 @@ app.post('/avatar-upload', upload.single('myFile'), (req, res, next) => {
  * Funcion para subir un nuevo personaje a la BBDD
  */
 app.post('/create-character', (req, res) => {
-  var newChar = new Character(req.body)
+  var newChar = new CharacterModel(req.body)
   newChar.save(function(err, res){
     if(err) throw err;
   })
-  res.send({'success': true})
+  res.json({'success': true})
+})
+
+/**
+ * Funcion para subir un nuevo personaje a la BBDD
+ */
+app.post('/create-campaign', (req, res) => {
+  var newChamp = new CampaignModel(req.body)
+  newChamp.save(function(err, res){
+    if(err) throw err;
+  })
+  res.json({'success': true})
 })
 
 

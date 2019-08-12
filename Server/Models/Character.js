@@ -34,4 +34,4 @@ const CharacterSchema = {
 
 const CharacterModel = mongoose.model('Character', CharacterSchema)
 
-module.exports = CharacterModel
+module.exports = {CharacterModel, CharacterSchema}
