@@ -1,67 +1,15 @@
-.character-race-container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
 .character-race-table {
-    display: flex;
-    flex-direction: column;
     height: 85%;
     width: 60%;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.scroll {
-    overflow-y: auto;
-}
-
-.character-race-table tr {
-    display: flex;
-    flex: 1;
-}
-
-.character-race-table tr th {
-    flex: 1;
-    height: 40px;
-    background-color: #304385;
-    color: white;
-    border-bottom: 3px solid #192e78;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.character-race-table tr:hover td {
-    background-color: rgba(255,255,255,0.95);
 }
 
 .character-race-table td {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2%;
-    flex: 1;
-    background-color: #fff;
-    font-family: 'Luminari';
-}
-
-.character-race-selection td {
-    background-color: #d7b356 !important;
 }
 
 .character-race-ability {
     width: 30%;
-    display: flex;
     flex-direction: column;
-    align-content: center;
-    justify-content: space-around;
 }
 
 .character-race-ability-table {
@@ -87,39 +35,33 @@
     text-align: center;
 }
 
-.class-race-ability-select {
+.character-race-ability-select {
     font-family: 'Luminari';
     border-radius: 15px;
     padding-left: 5px;
 }
 
-.red {
-    background-color: #d35760 !important;
+.score {
     border-radius: 10px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.red {
+    background-color: #d35760 !important;
 }
 
 .yellow {
     background-color: #ebeb5d !important;
-    border-radius: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .green {
     background-color: #a7ff71 !important;
-    border-radius: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .blue {
     background-color: #00646E !important;
-    border-radius: 10px;
     color: white;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 

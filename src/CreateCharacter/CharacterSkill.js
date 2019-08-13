@@ -115,11 +115,11 @@ class CharacterSkill extends React.Component {
 
     render() {
         return (
-            <div className="character-skill-container">
-                    <div className="character-skill-header">
-                        <div className="character-skill-points">Points remaining: {this.props.data.pointsLeft}</div>
+            <div className="container-full flex-center-space-evenly flex-column">
+                    <div className="points-header">
+                        <div className="points-text">Points remaining: {this.props.data.pointsLeft}</div>
                     </div>
-                    <table className="character-skill-table">
+                    <table className="character-skill-table material-table material-shadow">
                         <thead>
                             <tr>
                                 <th >Name</th>

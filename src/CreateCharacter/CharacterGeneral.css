@@ -1,6 +1,22 @@
-.character-general-container {
+.container-full {
     height: 100%;
     width: 100%;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center-space-evenly {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 input[type=file] { 
@@ -10,87 +26,48 @@ input[type=file] {
 
 .character-general-name {
     height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 5%;
-    margin-right: 5%;
+    width: 90%;
 }
-
-
 
 .character-general-details {
     height: 80%;
-    width: 100%;
-    display: flex;
-
+    width: 90%;
 }
 
 .character-general-side {
     height: 100%;
     width: 30%;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
 }
 
 .character-general-alignment {
-    color: white;
     width: 70%;
-    height: 70%;
-
+    height: 70%;    
 }
 
 .character-general-center {
     height: 100%;
     width: 40%;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.character-general-title {
-    color: white;
-    margin: 5%;
-    font-size: 7vh;
 }
 
 .character-general-row {
     height: 33%;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
-
 
 .character-general-square{
     height: 33%;
     width: 33%;
 }
 
-.card-border {
-    background-color: #304385;
-    border-radius: 2px;
+.material-shadow {
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-    color: white;
-    border-radius: 10px;
-    height: 90%;
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: 5%;
-  }
+}
 
-  .card-borderless {
+  .card {
     background-color: #fff;
     border-radius: 2px;
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-    color: black;
     border-radius: 10px;
     height: 90%;
     width: 90%;
@@ -101,37 +78,33 @@ input[type=file] {
     margin: 5%;
   }
 
-
+  .card-selected {
+    background-color: #304385;
+    color: white;
+  }
 
   .character-general-select {
     font-size: 15px;
     height: 30%;
-    width: 100%;
-    margin-right: 5%;
+    width: 45%;
     border-radius: 20px;
     padding-left: 15px;
     border: 0px;
     font-family: 'Luminari';
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-
   }
 
-  .character-general-avatar {
-      background-color: #fff;
-      height: 150px;
-      width: 150px;
-      border-radius: 100%;
-      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  }
+.avatar {
+    background-color: #fff;
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+    overflow: hidden;
+}
 
-  .character-general-avatar:hover {
+.character-general-avatar:hover {
     background-color: rgba(255,255,255,0.8)
 }
 
-.card-borderless:hover{
+.card:hover{
     background-color: rgba(255,255,255,0.95)
 }
-  

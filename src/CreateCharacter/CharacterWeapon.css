@@ -1,20 +1,7 @@
-.character-weapon-container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-
-}
-
 .character-weapon-side {
-    display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
     height: 85%;
     width: 45%;
-    border-radius: 10px;
 }
 
 .character-weapon-title {
@@ -24,54 +11,7 @@
 }
 
 .character-weapon-table {
-    display: flex;
-    flex-direction: column;
     height: 80%;
     width: 100%;
-    border-radius: 10px;
-    overflow: hidden;
-    font-size: 90%;
+    font-size: 87%;
 }
-
-.scroll {
-    overflow-y: auto;
-}
-
-.character-weapon-table tr {
-    display: flex;
-    flex: 1;
-}
-
-.character-weapon-table tr th {
-    flex: 1;
-    height: 40px;
-    font-size: 80%;
-    background-color: #304385;
-    color: white;
-    border-bottom: 3px solid #192e78;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.character-weapon-table tr:hover td {
-    background-color: rgba(255,255,255,0.95);
-}
-
-.character-weapon-table td {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2%;
-    flex: 1;
-    background-color: #fff;
-    font-family: 'Luminari';
-}
-
-.character-weapon-selection td {
-    background-color: #d7b356 !important;
-}
-
-

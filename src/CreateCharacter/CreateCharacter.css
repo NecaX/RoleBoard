@@ -15,11 +15,7 @@
     height: 12%;
     bottom: 0;
     position: fixed;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
     margin-bottom: 2%;
-
 }
 
 @font-face {
@@ -29,7 +25,6 @@
     src: local('Luminari'), url('../fonts/Luminari-Regular.woff') format('woff');
   }
 
-  .breadcrumb-option {
+  .luminari-text {
     font-family: 'Luminari';
-
   }

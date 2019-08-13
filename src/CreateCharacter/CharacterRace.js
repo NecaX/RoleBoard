@@ -17,7 +17,6 @@ const abilities = [
     'Charisma'
 ]
 
-
 class CharacterRace extends React.Component {
 
     constructor(props) {
@@ -27,11 +26,6 @@ class CharacterRace extends React.Component {
         this.rollDice = this.rollDice.bind(this);
         this.selectedScores = this.selectedScores.bind(this);
         this.state = {
-            raceChosen: 0, // Indice de la raza seleccionada
-            scores: [0,0,0,0,0,0], // Array de indices de las puntuaciones seleccionadas
-            genScores: [0,0,0,0,0,0], // Array (estatico cuando se lanza el dado) de las puntuaciones
-            rolledDice: false,
-            selSc: new Set([]), // Set de los indices de las puntuaciones ya seleccionadas (para seleccionarlas una sola vez)
             classList: [
                 {
                     icon: elf,
@@ -228,17 +222,19 @@ class CharacterRace extends React.Component {
             }
 
             // Si se ha escogido un valor de la tirada de dados se pone, si no se toma 0
-            var score = (parseInt(this.props.data['scores'][index])-1) >= 0 ? this.props.data['genScores'][parseInt(this.props.data['scores'][index])-1] : 0
-            var colorClass = ''
+            var scoreIndex = parseInt(this.props.data.scores[index])-1
+            var score = (scoreIndex) >= 0 ? this.props.data.genScores[scoreIndex] : 0
+            var finalScore = racemod + score
             // Dependiendo de la tirada elegida, cambia el color de la casilla
-            if(racemod + score < 7) {
-                colorClass = 'red'
-            } else if(racemod + score < 11) {
-                colorClass = 'yellow'
-            } else if(racemod + score < 15) {
-                colorClass = 'green'
+            var colorClass = 'score '
+            if(finalScore < 7) {
+                colorClass += 'red'
+            } else if(finalScore < 11) {
+                colorClass += 'yellow'
+            } else if(finalScore < 15) {
+                colorClass += 'green'
             } else{
-                colorClass = 'blue'
+                colorClass += 'blue'
             }
 
             return (
@@ -246,17 +242,17 @@ class CharacterRace extends React.Component {
                     <td>{ability}</td>
                     <td>
                         {/* El select se activa cuando se ha tirado el dado */}
-                        <select value={this.props.data['scores'][index]} disabled={!this.props.data['rolledDice']} className="class-race-ability-select" onChange={(event) => this.modifyScore(event.target.value, index, ability, racemod)}>
+                        <select value={this.props.data.scores[index]} disabled={!this.props.data.rolledDice} className="character-race-ability-select" onChange={(event) => this.modifyScore(event.target.value, index, ability, racemod)}>
                             {/* Los valores del select son los indices, para llevar control de que tirada se ha usado. El indice 0 se usa para el placeholder */}
                             <option value={0}>---</option>
-                            {this.renderScores(this.props.data['genScores'])}
+                            {this.renderScores(this.props.data.genScores)}
                         </select>
                     </td>
                     <td className="character-race-ability-number">
                         {racemod}
                     </td>
                     <td className={`character-race-ability-number`}>
-                        <div className = {colorClass}>{score + racemod}</div>
+                        <div className = {colorClass}>{finalScore}</div>
                     </td>
                 </tr>
             )
@@ -301,7 +297,7 @@ class CharacterRace extends React.Component {
         this.props.modifyFunction('icon', this.state.classList[index]['icon'])
         var newDict = this.props.data.abilities
         abilities.forEach((ability, index) => {
-            var score = (parseInt(this.props.data['scores'][index])-1) >= 0 ? this.props.data['genScores'][parseInt(this.props.data['scores'][index])-1] : 0
+            var score = (parseInt(this.props.data.scores[index])-1) >= 0 ? this.props.data.genScores[parseInt(this.props.data.scores[index])-1] : 0
             var racemod = this.state.classList[this.props.data.raceChosen]['mod'][ability] ? this.state.classList[this.props.data.raceChosen]['mod'][ability] : 0
             newDict[ability] = score + racemod
         })
@@ -315,7 +311,7 @@ class CharacterRace extends React.Component {
     renderScores(array) {
         return array.sort((a,b) => {return a - b}).map((score, index) => {
             return (
-                <option key={index} value={index+1} disabled={this.props.data['selSc'].has(index+1)} >{score}</option>
+                <option key={index} value={index+1} disabled={this.props.data.selSc.has(index+1)} >{score}</option>
             )
         })
     }
@@ -325,10 +321,10 @@ class CharacterRace extends React.Component {
      * Se actualiza el set de tiradas escogidas y el diccionario de caracteristicas
      */
     modifyScore(value, index, ability, racemod) {
-        var newScores = this.props.data['scores']
+        var newScores = this.props.data.scores
         this.selectedScores(newScores[index], value)
         newScores[index] = value
-        var score = (parseInt(this.props.data['scores'][index])-1) >= 0 ? this.props.data['genScores'][parseInt(this.props.data['scores'][index])-1] : 0
+        var score = (parseInt(this.props.data.scores[index])-1) >= 0 ? this.props.data.genScores[parseInt(this.props.data.scores[index])-1] : 0
         var newDict = this.props.data.abilities
         newDict[ability] = racemod + score
         this.props.modifyFunction('scores', newScores)
@@ -343,14 +339,13 @@ class CharacterRace extends React.Component {
      * @param {String} next Nuevo indice
      */
     selectedScores(prev, next){
-        var newSet = this.props.data['selSc']
+        var newSet = this.props.data.selSc
         if (newSet.has(parseInt(prev))){
             newSet.delete(parseInt(prev))
         }
         if(next > 0) {
             newSet.add(parseInt(next))
         }
-
         this.props.modifyFunction('selSc', newSet)
     }
 
@@ -359,7 +354,7 @@ class CharacterRace extends React.Component {
      */
     renderChosen(charclass) {
         return (
-            <tr className="character-race-selection">
+            <tr className="material-selection">
                     <td style={{flexGrow: 1}}><Avatar style={{borderRadius:'0'}} src={charclass['icon']} /></td>
                     <td style={{flexGrow: 2}}>{charclass['name']}</td>
                     <td style={{flexGrow: 3}}>{this.renderMod(charclass['mod'])}</td>
@@ -370,8 +365,8 @@ class CharacterRace extends React.Component {
 
     render() {
         return (
-            <div className="character-race-container">
-                <table className="character-race-table">
+            <div className="container-full flex-center-space-evenly">
+                <table className="character-race-table material-table material-shadow">
                     <thead>
                         <tr>
                             <th style={{flexGrow: 1}}></th>
@@ -385,11 +380,11 @@ class CharacterRace extends React.Component {
                         {this.renderOptions(this.state.classList)}
                     </tbody>
                     <tbody >
-                        {this.props.data['raceChosen'] >= 0 ? this.renderChosen(this.state.classList[this.props.data['raceChosen']]) : <div/>}
+                        {this.props.data.raceChosen >= 0 ? this.renderChosen(this.state.classList[this.props.data.raceChosen]) : <div/>}
                     </tbody>
                 </table>
-                <div className="character-race-ability">
-                    <table className="character-race-ability-table">
+                <div className="character-race-ability flex-center-space-evenly ">
+                    <table className="character-race-ability-table material-shadow">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -402,14 +397,12 @@ class CharacterRace extends React.Component {
                             {this.renderAbilities()}
                         </tbody>
                     </table>
-                    <Fab disabled={this.props.data['rolledDice']} variant="extended" style={{fontFamily: 'Luminari'}} onClick={this.rollDice}>
+                    <Fab disabled={this.props.data.rolledDice} variant="extended" style={{fontFamily: 'Luminari'}} onClick={this.rollDice}>
                         <Avatar src={onedice} style={{paddingRight: 20}}/>
                         Get the scores
                     </Fab>
                 </div>
             </div>
-
-
         )
     }
 }

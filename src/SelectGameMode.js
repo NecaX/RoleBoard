@@ -1,7 +1,7 @@
 import React from 'react';
 import './SelectGameMode.css';
-import { withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
+import GreenFab from './Components/GreenFab';
+import PurpleFab from './Components/PurpleFab';
 import Create from '@material-ui/icons/Create';
 import sword from './img/sword.png';
 
@@ -34,32 +34,6 @@ class SelectGameMode extends React.Component {
     })
   }
 
-  GreenFab = withStyles(theme => ({
-    root: {
-      color: 'white',
-      backgroundColor: '#5fbb97',
-      '&:hover': {
-        backgroundColor: '#7cc7a9',
-        color: 'white'
-      },
-    },
-  }))(Fab);
-
-  PurpleFab = withStyles(theme => ({
-    root: {
-      color: 'white',
-      backgroundColor: '#541388',
-      '&:hover': {
-        backgroundColor: '#733d9d',
-        color: 'white'
-      },
-    },
-    label: {
-      paddingRight: 10,
-      paddingLeft: 10,
-    }
-  }))(Fab);
-
   onChangeDirecting(event){
     this.setState({
       toDirect: event.target.value
@@ -87,19 +61,19 @@ class SelectGameMode extends React.Component {
             <select className="select" onChange={this.onChangeDirecting}>
               {this.renderOptions(this.state.directing)}
             </select> 
-              <this.PurpleFab variant="extended" >
+              <PurpleFab variant="extended" >
                 Continue
-              </this.PurpleFab>
+              </PurpleFab>
           </div>
           <div className="separator">
             <h2><span>or</span></h2>
           </div>
 
           <div className='continue-button'>
-              <this.GreenFab variant="extended" aria-label="Delete" onClick={() => this.navigate('/create-campaign/'+this.props.match.params.username)}>
+              <GreenFab variant="extended"  onClick={() => this.navigate('/create-campaign/'+this.props.match.params.username)}>
                 <Create style={{paddingRight: 10}}/>
                 Create a new Adventure
-              </this.GreenFab>
+              </GreenFab>
           </div>
           
         </div>
@@ -112,19 +86,19 @@ class SelectGameMode extends React.Component {
             <select className="select" onChange={this.onChangePlaying}>
               {this.renderOptions(this.state.playing)}
             </select> 
-              <this.PurpleFab variant="extended">
+              <PurpleFab variant="extended">
                 Continue
-              </this.PurpleFab>
+              </PurpleFab>
           </div>
           <div className="separator">
             <h2><span>or</span></h2>
           </div>
 
           <div className='continue-button'>
-              <this.GreenFab variant="extended" aria-label="Delete" onClick={() => this.navigate('/cch/'+ this.props.match.params.username)}>
+              <GreenFab variant="extended" onClick={() => this.navigate('/cch/'+ this.props.match.params.username)}>
               <img alt="" src={sword} style={{width: '30px', paddingRight: 10}} />
                 Join a new Adventure
-              </this.GreenFab>
+              </GreenFab>
           </div>
         </div>
       </div>

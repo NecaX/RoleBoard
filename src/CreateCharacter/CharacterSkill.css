@@ -1,75 +1,12 @@
-.character-skill-container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-bottom: 5%;
-}
-
-.character-skill-header {
-    font-size: 6vmin;
-    height: 10%;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 10%;
-}
-
-.character-skill-points {
-    background-color: #fff;
-    border-radius: 25px;
-    padding-left: 2%;
-    padding-right: 2%;
-}
-
 .character-skill-table {
-    display: flex;
-    flex-direction: column;
     height: 75%;
     width: 90%;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.character-skill-table tr {
-    display: flex;
-    flex: 1;
-}
-
-.character-skill-table tr th {
-    flex: 1;
-    height: 40px;
-    background-color: #304385;
-    color: white;
-    border-bottom: 3px solid #192e78;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-}
-
-.character-skill-table tr:hover td {
-    background-color: rgba(255,255,255,0.95);
-}
-
-.character-skill-table td {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2%;
-    flex: 1;
-    background-color: #fff;
-    font-family: 'Luminari';
 }
 
 .character-skill-input {
     width: 50%;
-    border-radius: 10px;
-    border: 1px solid black;
+    border-radius: 15px;
+    border: 1px solid rgba(0,0,0,0.6);
     padding-left: 10%;
+    font-family: 'Luminari'
 }
-

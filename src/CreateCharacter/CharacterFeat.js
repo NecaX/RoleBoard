@@ -101,9 +101,7 @@ class CharacterFeat extends React.Component {
     }
 
     renderOptions(array) {
-
         return array.map((charfeat, index) => {
-
             return (
                 <tr key={index} onClick={() => this.addFeat(index)}>
                     <td style={{flexGrow: 3}}>{charfeat['name']}</td>
@@ -117,23 +115,23 @@ class CharacterFeat extends React.Component {
 
     addFeat(index) {
         var newFeat = this.state.featsList[index]
-        if(this.props.data['featsLeft'] > 0 && !this.props.data['featsSelected'].has(newFeat)){
-            var newSet = this.props.data['featsSelected']
+        if(this.props.data.featsLeft > 0 && !this.props.data.featsSelected.has(newFeat)){
+            var newSet = this.props.data.featsSelected
             newSet.add(newFeat)
             this.props.modifyFunction('featsSelected', newSet)
-            this.props.modifyFunction('featsLeft', this.props.data['featsLeft'] - 1)
+            this.props.modifyFunction('featsLeft', this.props.data.featsLeft - 1)
         }
     }
 
     removeFeat(feat) {
-        var newSet = this.props.data['featsSelected']
+        var newSet = this.props.data.featsSelected
         newSet.delete(feat)
         this.props.modifyFunction('featsSelected', newSet)
-        this.props.modifyFunction('featsLeft', this.props.data['featsLeft'] + 1)
+        this.props.modifyFunction('featsLeft', this.props.data.featsLeft + 1)
     }
 
     renderSelected() {
-        return [...this.props.data['featsSelected']].map((feat, index) => {
+        return [...this.props.data.featsSelected].map((feat, index) => {
 
             return (
                 <tr key={index}>
@@ -146,12 +144,12 @@ class CharacterFeat extends React.Component {
 
     render() {
         return (
-            <div className="character-feat-container">
-                    <div className="character-feat-header">
-                        <div className="character-feat-points">Feats remaining: {this.props.data['featsLeft']}</div>
+            <div className="container-full flex-center-space-evenly flex-column">
+                    <div className="points-header">
+                        <div className="points-text">Feats remaining: {this.props.data.featsLeft}</div>
                     </div>
                     <div className="character-feat-body">
-                        <table className="character-feat-table">
+                        <table className="character-feat-table material-table material-shadow">
                             <thead>
                                 <tr>
                                     <th style={{flexGrow: 2}}>Name</th>
@@ -164,7 +162,7 @@ class CharacterFeat extends React.Component {
                                 {this.renderOptions(this.state.featsList)}
                             </tbody>
                         </table>
-                        <table className="character-feat-table character-feat-selection">
+                        <table className="character-feat-selection material-table">
                             <thead>
                                 <tr>
                                     <th style={{flexGrow: 3}} >Feat selected</th>

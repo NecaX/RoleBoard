@@ -132,20 +132,20 @@ class CharacterClass extends React.Component {
 
     renderChosen(charclass) {
         return (
-            <tr className="character-class-selection">
-                    <td style={{flexGrow: 1}}><Avatar src={charclass['icon']} /></td>
-                    <td style={{flexGrow: 2}}>{charclass['name']}</td>
-                    <td style={{flexGrow: 1}}>{charclass['dice']}</td>
-                    <td style={{flexGrow: 4}}>{charclass['role']}</td>
-                    <td style={{flexGrow: 2}}>{charclass['ability']}</td>
+            <tr className="material-selection">
+                <td style={{flexGrow: 1}}><Avatar src={charclass['icon']} /></td>
+                <td style={{flexGrow: 2}}>{charclass['name']}</td>
+                <td style={{flexGrow: 1}}>{charclass['dice']}</td>
+                <td style={{flexGrow: 4}}>{charclass['role']}</td>
+                <td style={{flexGrow: 2}}>{charclass['ability']}</td>
             </tr>
         )
     }
 
     render() {
         return (
-            <div className="character-class-container">
-                <table className="character-class-table">
+            <div className="container-full flex-centered">
+                <table className="character-class-table material-table material-shadow">
                     <thead>
                         <tr>
                             <th style={{flexGrow: 0.9}}></th>

@@ -12,12 +12,7 @@ class CharacterWeapon extends React.Component {
 
     constructor(props) {
         super(props); //Constructor padre
-        this.changePrimary = this.changePrimary.bind(this);
-        this.changeSecondary = this.changeSecondary.bind(this);
-        this.renderOptions = this.renderOptions.bind(this);
         this.state = {
-            primaryChosen: 0,
-            secondaryChosen: 0,
             primaryList: [
                 {
                     icon: club,
@@ -156,7 +151,6 @@ class CharacterWeapon extends React.Component {
     }
 
     renderOptions(array, changeSelected) {
-
         return array.map((charweapon, index) => {
             return (
                 <tr key={index} onClick={() => changeSelected(charweapon['icon'], charweapon['name'], index)}>
@@ -172,21 +166,9 @@ class CharacterWeapon extends React.Component {
         })
     }
 
-    changePrimary(index) {
-        this.setState({
-            primaryChosen: index,
-        })
-    }
-
-    changeSecondary(index) {
-        this.setState({
-            secondaryChosen: index,
-        })
-    }
-
     renderChosen(charweapon) {
         return (
-            <tr className="character-class-selection">
+            <tr className="material-selection">
                 <td ><Avatar style={{ borderRadius: 0 }} src={charweapon['icon']} /></td>
                 <td >{charweapon['name']}</td>
                 <td >{charweapon['cat']}</td>
@@ -197,58 +179,39 @@ class CharacterWeapon extends React.Component {
         )
     }
 
+    renderWeaponTable(title, list, modifyFunction, chosen) {
+        return (
+            <div className="character-weapon-side flex-center-space-evenly">
+                <div className="character-weapon-title">{title}</div>
+                <table className="character-weapon-table material-table material-shadow">
+                    <thead>
+                        <tr>
+                            <th style={{ flexGrow: 1 }}>Type</th>
+                            <th style={{ flexGrow: 1.3 }}>Weapon Name</th>
+                            <th style={{ flexGrow: 1.3 }}>Category</th>
+                            <th style={{ flexGrow: 1 }}>Type</th>
+                            <th style={{ flexGrow: 1 }}>Damage</th>
+                            <th style={{ flexGrow: 1 }}>Critical</th>
+                            <th ></th>
+                        </tr>
+                    </thead>
+                    <tbody className="scroll">
+                        {this.renderOptions(list, modifyFunction)}
+                    </tbody>
+                    <tbody >
+                        {chosen >= 0 ? this.renderChosen(list[chosen]) : <div/>}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+
     render() {
         return (
-            <div className="character-weapon-container">
-                <div className="character-weapon-side">
-                    <div className="character-weapon-title">Primary Weapon</div>
-                    <table className="character-weapon-table">
-                        <thead>
-                            <tr>
-                                <th style={{ flexGrow: 1 }}>Type</th>
-                                <th style={{ flexGrow: 1.3 }}>Weapon Name</th>
-                                <th style={{ flexGrow: 1.3 }}>Category</th>
-                                <th style={{ flexGrow: 1 }}>Type</th>
-                                <th style={{ flexGrow: 1 }}>Damage</th>
-                                <th style={{ flexGrow: 1 }}>Critical</th>
-                                <th ></th>
-                            </tr>
-                        </thead>
-                        <tbody className="scroll">
-                            {this.renderOptions(this.state.primaryList, this.props.modifyPrimary)}
-                        </tbody>
-                        <tbody >
-                            {this.props.primweapon['primaryChosen'] >= 0 ? this.renderChosen(this.state.primaryList[this.props.primweapon['primaryChosen']]) : <div/>}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="character-weapon-side">
-                    <div className="character-weapon-title">Secondary Weapon</div>
-                    <table className="character-weapon-table">
-                        <thead>
-                            <tr>
-                                <th style={{ flexGrow: 1 }}>Type</th>
-                                <th style={{ flexGrow: 1.3 }}>Weapon Name</th>
-                                <th style={{ flexGrow: 1.3 }}>Category</th>
-                                <th style={{ flexGrow: 1 }}>Type</th>
-                                <th style={{ flexGrow: 1 }}>Damage</th>
-                                <th style={{ flexGrow: 1 }}>Critical</th>
-                                <th ></th>
-                            </tr>
-                        </thead>
-                        <tbody className="scroll">
-                            {this.renderOptions(this.state.secondaryList, this.props.modifySecondary)}
-                        </tbody>
-                        <tbody >
-                            {this.props.secweapon['secondaryChosen'] >= 0 ? this.renderChosen(this.state.secondaryList[this.props.secweapon['secondaryChosen']]) : <div/>}
-                        </tbody>
-                    </table>
-                </div>
-
+            <div className="container-full flex-center-space-evenly">
+                {this.renderWeaponTable('Primary Weapon', this.state.primaryList, this.props.modifyPrimary, this.props.primweapon.primaryChosen)}
+                {this.renderWeaponTable('Secondary Weapon', this.state.secondaryList, this.props.modifySecondary, this.props.secweapon.secondaryChosen)}
             </div>
-
-
         )
     }
 }
