@@ -18,6 +18,7 @@ class CreateCharacter extends React.Component {
 
     constructor(props) {
         super(props); //Constructor padre
+        this.handleClick = this.handleClick.bind(this)
         this.state = {
             page: 0,
             general: {
@@ -35,7 +36,7 @@ class CreateCharacter extends React.Component {
             class: {
                 name: '',
                 icon: null,
-                classChosen: -1,
+                chosen: -1,
             },
             race: {
                 name: '',
@@ -58,12 +59,12 @@ class CreateCharacter extends React.Component {
             primweapon: {
                 name: '',
                 icon: null,
-                primaryChosen: -1,
+                chosen: -1,
             },
             secweapon: {
                 name: '',
                 icon: null,
-                secondaryChosen: -1,
+                chosen: -1,
             },
             feats: {
                 featsLeft: 2,
@@ -93,7 +94,7 @@ class CreateCharacter extends React.Component {
         var newDict = {
             name: newName,
             icon: newIcon,
-            classChosen: index,
+            chosen: index,
         }
         newState[element] = newDict
         this.setState(newState)
@@ -107,6 +108,7 @@ class CreateCharacter extends React.Component {
             })
         }else {
             this.saveCharacter()
+            this.props.history.push('/sgm/'+this.props.match.params.username)
         }
     }
 
@@ -121,6 +123,8 @@ class CreateCharacter extends React.Component {
         character.secweapon = this.state.secweapon.name
         character.featsSelected = [...this.state.feats.featsSelected]
         character.skillsSelected = this.state.skills.skillsSelected
+        character.campaign = this.props.match.params.code
+        character.username = this.props.match.params.username
 
         fetch(`${serverAddress}/create-character`, {
             method: 'POST', 

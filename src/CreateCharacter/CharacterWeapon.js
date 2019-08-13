@@ -180,6 +180,7 @@ class CharacterWeapon extends React.Component {
     }
 
     renderWeaponTable(title, list, modifyFunction, chosen) {
+        console.log(chosen)
         return (
             <div className="character-weapon-side flex-center-space-evenly">
                 <div className="character-weapon-title">{title}</div>
@@ -209,8 +210,8 @@ class CharacterWeapon extends React.Component {
     render() {
         return (
             <div className="container-full flex-center-space-evenly">
-                {this.renderWeaponTable('Primary Weapon', this.state.primaryList, this.props.modifyPrimary, this.props.primweapon.primaryChosen)}
-                {this.renderWeaponTable('Secondary Weapon', this.state.secondaryList, this.props.modifySecondary, this.props.secweapon.secondaryChosen)}
+                {this.renderWeaponTable('Primary Weapon', this.state.primaryList, this.props.modifyPrimary, this.props.primweapon.chosen)}
+                {this.renderWeaponTable('Secondary Weapon', this.state.secondaryList, this.props.modifySecondary, this.props.secweapon.chosen)}
             </div>
         )
     }

@@ -96,6 +96,53 @@ app.post('/login', (req, res) => {
 
 })
 
+/*
+ * Control de existencia de partida
+ */
+app.post('/check-campaign', (req, res) => {
+  var code =  req.body['code']
+  var query = {'code': code};
+
+  // Comprobamos que exista una aventura con ese nombre
+  // Y comunicamos el resultado
+  CampaignModel.findOne(query, function(err, result) {
+    if (err) throw err;
+    if(result == null){
+      res.send({'success': false})
+    }else{
+      res.send({'success': true})
+    }
+  })
+  
+})
+
+/*
+ * Control de existencia de partida
+ */
+app.post('/get-directing-campaign', (req, res) => {
+  var username =  req.body['username']
+  var query = {'dm': username};
+
+  // Comprobamos que exista una aventura con ese nombre
+  // Y comunicamos el resultado
+  CampaignModel.find(query, function(err, result) {
+    if (err) throw err;
+    if(result == null){
+      res.send({'success': false})
+    }else{
+      var response = []
+      result.map((elem, index) => {
+        var game = {}
+        game.title = elem.title
+        game.world = elem.world
+        response.push(game)
+      })
+      res.json(response)
+    }
+  })
+  
+})
+
 // SET IMAGE STORAGE WITH MULTER
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {

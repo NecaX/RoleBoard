@@ -161,7 +161,7 @@ class CharacterClass extends React.Component {
                     </tbody>
                     <tbody >
                         {/* Show selected class only if some is selected */}
-                        {this.props.data['classChosen'] >= 0 ? this.renderChosen(this.state.classList[this.props.data['classChosen']]) : <div/>}
+                        {this.props.data['chosen'] >= 0 ? this.renderChosen(this.state.classList[this.props.data['chosen']]) : <div/>}
                     </tbody>
                 </table>
             </div>

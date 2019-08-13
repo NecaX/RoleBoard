@@ -30,6 +30,8 @@ const CharacterSchema = {
         type: Map,
         of: Number,
      },
+     campaign: String,
+     username: String,
 }
 
 const CharacterModel = mongoose.model('Character', CharacterSchema)

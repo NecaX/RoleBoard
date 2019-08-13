@@ -3,8 +3,8 @@ import './CreateCampaign.css';
 import {serverAddress} from '../Util.js'
 import Send from '@material-ui/icons/Send';
 
-import CssTextField from '../Components/CssTextField.js'
-import GreenFab from '../Components/GreenFab.js'
+import CssTextField from '../components/CssTextField.js'
+import GreenFab from '../components/GreenFab.js'
 
 class CreateCampaign extends React.Component {
 

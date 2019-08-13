@@ -1,109 +1,202 @@
 import React from 'react';
 import './SelectGameMode.css';
-import GreenFab from './Components/GreenFab';
-import PurpleFab from './Components/PurpleFab';
+import GreenFab from './components/GreenFab';
+import PurpleFab from './components/PurpleFab';
 import Create from '@material-ui/icons/Create';
 import sword from './img/sword.png';
+import Dialog from '@material-ui/core/Dialog';
+import ModalTitle from './components/ModalTitle';
+import ModalTextField from './components/ModalTextField';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
+import {serverAddress} from './Util.js'
 
 
 class SelectGameMode extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChangeDirecting = this.onChangeDirecting.bind(this);
-    this.onChangePlaying = this.onChangePlaying.bind(this);
-    this.state = {
-      directing: [ // Lista de partidas que el jugador esta dirigiendo
-        'Tariel',
-        'Middle Earth'
-      ],
-      playing: [ // Lista de partidas que el jugador esta jugando
-        'Scadrial',
-        'Westeros'
-      ],
-      toDirect: '', // Partida seleccionada para dirigir
-      toPlay: '', // Partida seleccionada para jugar
+    constructor(props) {
+        super(props);
+        this.onChangeDirecting = this.onChangeDirecting.bind(this);
+        this.onChangePlaying = this.onChangePlaying.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleCode = this.handleCode.bind(this);
+        this.handleNewCharacter = this.handleNewCharacter.bind(this);
+        this.state = {
+            directing: [ // Lista de partidas que el jugador esta dirigiendo
+                'Tariel',
+                'Middle Earth'
+            ],
+            playing: [],
+            toDirect: '', // Partida seleccionada para dirigir
+            toPlay: '', // Partida seleccionada para jugar
+            open: false,
+            code: '',
+            codeExists: true,
+        }
+
     }
 
-  }
+    componentDidMount() {
+        var data = {'username': this.props.match.params.username}
+        fetch(serverAddress + '/get-directing-campaign', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .catch(error => console.error('Error: ', error))
+        .then((json) => {
+            this.setState({directing: json})
+        })
+    }
 
-  renderOptions(array){
-    return array.map((game, index) => {
-      return(
-        <option key={index} value={game}>{game}</option>
-      )
-    })
-  }
+    renderOptions(array) {
+        return array.map((game, index) => {
+            return (
+                <option key={index} value={game.world}>{game.world} - {game.title}</option>
+            )
+        })
+    }
 
-  onChangeDirecting(event){
-    this.setState({
-      toDirect: event.target.value
-    })
-  }
+    onChangeDirecting(event) {
+        this.setState({
+            toDirect: event.target.value
+        })
+    }
 
-  onChangePlaying(event){
-    this.setState({
-      toPlay: event.target.value
-    })
-  }
+    onChangePlaying(event) {
+        this.setState({
+            toPlay: event.target.value
+        })
+    }
 
-  navigate(route){
-    this.props.history.push(route)
-  }
+    navigate(route) {
+        this.props.history.push(route)
 
-  render() {
-    return (
-      <div className="container">
-        <div className="option">
-          <div className="title">
-            Dungeon Master
-          </div>
-          <div className="menu-select">
-            <select className="select" onChange={this.onChangeDirecting}>
-              {this.renderOptions(this.state.directing)}
-            </select> 
-              <PurpleFab variant="extended" >
-                Continue
-              </PurpleFab>
-          </div>
-          <div className="separator">
-            <h2><span>or</span></h2>
-          </div>
+    }
 
-          <div className='continue-button'>
-              <GreenFab variant="extended"  onClick={() => this.navigate('/create-campaign/'+this.props.match.params.username)}>
-                <Create style={{paddingRight: 10}}/>
-                Create a new Adventure
-              </GreenFab>
-          </div>
-          
-        </div>
-        <div className="divider"></div>
-        <div className="option">
-          <div className="title">
-            Playable Character
-          </div>
-          <div className="menu-select">
-            <select className="select" onChange={this.onChangePlaying}>
-              {this.renderOptions(this.state.playing)}
-            </select> 
-              <PurpleFab variant="extended">
-                Continue
-              </PurpleFab>
-          </div>
-          <div className="separator">
-            <h2><span>or</span></h2>
-          </div>
+    handleOpen() {
+        this.setState({ open: true })
+    }
 
-          <div className='continue-button'>
-              <GreenFab variant="extended" onClick={() => this.navigate('/cch/'+ this.props.match.params.username)}>
-              <img alt="" src={sword} style={{width: '30px', paddingRight: 10}} />
-                Join a new Adventure
-              </GreenFab>
-          </div>
-        </div>
-      </div>
-    )
-  }
+    handleClose() {
+        this.setState({ open: false })
+    }
+
+    handleCode(event) {
+        this.setState({
+            code: event.target.value
+        })
+    }
+
+    handleNewCharacter() {
+        console.log(this.state.code)
+        var data = {'code': this.state.code }
+        fetch(serverAddress + '/check-campaign', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .catch(error => console.error('Error: ', error))
+        .then((json) => {
+            if (json['success']) {
+                this.navigate('/cch/' + this.props.match.params.username + '/' + this.state.code)
+                this.handleClose()
+            } else {
+                // En caso contrario, mostramos el error correspondiente por pantalla
+                console.log('Fail')
+                this.setState({
+                    codeExists: false,
+                })
+            }
+        })
+        
+    }
+
+    render() {
+        return (
+            <div className="container">
+                <div className="option">
+                    <div className="title">
+                        Dungeon Master
+                    </div>
+                    <div className="menu-select">
+                        <select className="select" onChange={this.onChangeDirecting}>
+                            {this.renderOptions(this.state.directing)}
+                        </select>
+                        <PurpleFab variant="extended" >
+                            Continue
+                        </PurpleFab>
+                    </div>
+                    <div className="separator">
+                        <h2><span>or</span></h2>
+                    </div>
+
+                    <div className='continue-button'>
+                        <GreenFab variant="extended" onClick={() => this.navigate('/create-campaign/' + this.props.match.params.username)}>
+                            <Create style={{ paddingRight: 10 }} />
+                            Create a new Adventure
+                        </GreenFab>
+                    </div>
+
+                </div>
+                <div className="divider"></div>
+                <div className="option">
+                    <div className="title">
+                        Playable Character
+                    </div>
+                    <div className="menu-select">
+                        <select className="select" onChange={this.onChangePlaying}>
+                            {this.renderOptions(this.state.playing)}
+                        </select>
+                        <PurpleFab variant="extended">
+                            Continue
+                        </PurpleFab>
+                    </div>
+                    <div className="separator">
+                        <h2><span>or</span></h2>
+                    </div>
+
+                    <div className='continue-button'>
+                        <GreenFab variant="extended" onClick={this.handleOpen}>
+                            <img alt="" src={sword} style={{ width: '30px', paddingRight: 10 }} />
+                            Join a new Adventure
+                        </GreenFab>
+                    </div>
+                </div>
+
+                <div>
+                    <Dialog style={{ fontFamily: 'Luminari' }} open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                        <ModalTitle>Enter the code of the campaign</ModalTitle>
+                        <DialogContent>
+                            <ModalTextField
+                                error={!this.state.codeExists}
+                                margin="dense"
+                                label="Code"
+                                variant="outlined"
+                                fullWidth
+                                onChange={this.handleCode}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button style={{ fontFamily: 'Luminari' }} onClick={this.handleClose} color="primary">
+                                Cancel
+                            </Button>
+                            <Button style={{ fontFamily: 'Luminari' }} onClick={this.handleNewCharacter} color="primary">
+                                Create new user
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default SelectGameMode;
