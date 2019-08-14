@@ -34,7 +34,7 @@
 .create-campaign-text {
     color: white;
     font-size: 25px;
-    padding-left: 2%;
+    display: flex;
 }
 
 .create-campaign-title {
@@ -44,5 +44,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.create-campaign-code {
+    margin-left: 10px;
+}
+
+.create-campaign-code:hover {
+    text-decoration: underline;
 }
 

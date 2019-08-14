@@ -5,6 +5,8 @@ import Send from '@material-ui/icons/Send';
 
 import CssTextField from '../components/CssTextField.js'
 import GreenFab from '../components/GreenFab.js'
+import { Fab, Tooltip } from '@material-ui/core';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 class CreateCampaign extends React.Component {
 
@@ -12,6 +14,7 @@ class CreateCampaign extends React.Component {
     super(props); 
     this.modifyFunction = this.modifyFunction.bind(this)
     this.createNewCampaign = this.createNewCampaign.bind(this)
+    this.handleTooltip = this.handleTooltip.bind(this)
     this.state = {
       title: '',
       world: '',
@@ -19,6 +22,7 @@ class CreateCampaign extends React.Component {
       maxPlayers: 4,
       pass: '',
       dm: this.props.match.params.id,
+      open: false
     }
   }
 
@@ -46,6 +50,17 @@ class CreateCampaign extends React.Component {
     var newObj = {}
     newObj[myKey] = value
     this.setState(newObj)
+  }
+
+  handleTooltip() {
+    this.setState({
+      open: true
+    })
+    setTimeout(function() {
+      this.setState({
+        open: false
+      })
+    }.bind(this), 1000);
   }
   
 
@@ -125,7 +140,13 @@ class CreateCampaign extends React.Component {
           </div>
           <input className="create-campaign-input" type='number' min={0} value={this.state.maxPlayers} onChange={(e) => {this.modifyFunction('maxPlayers', e.target.value)}} onKeyDown={(e) => {e.preventDefault()}}/> 
           <div className="create-campaign-text">
-            Join the campaign: {this.state.pass}
+            Join the campaign:
+            <Tooltip open={this.state.open} title='Copied to clipboard' className="create-campaign-code" >
+              <CopyToClipboard text={this.state.pass}>
+                <div onClick={this.handleTooltip} className="create-campaign-code">{this.state.pass}</div>
+              </CopyToClipboard>
+            </Tooltip>
+
           </div>
           <GreenFab variant="extended" onClick={this.createNewCampaign}>
             Next
@@ -138,3 +159,4 @@ class CreateCampaign extends React.Component {
 }
 
 export default CreateCampaign;
+
