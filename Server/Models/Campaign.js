@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-const {CharacterSchema} = require('./Character.js')
-const {ChapterSchema} = require('./Chapter.js')
 
 /**
  * Esquema ampliable de los campos que tendra el Campaign
@@ -10,15 +8,12 @@ const CampaignSchema = {
     title: String,
     world: String,
     summary: String,
-    dm: String,
+    dm: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     maxPlayers: Number,
     playersAdded: {type: Number, default: 0},
     code: String,
-    games: [ChapterSchema],
-    character: {
-        type: Map,
-        of: CharacterSchema,
-    }
+    games: [{type: mongoose.Schema.Types.ObjectId, ref: 'Chapter'}],
+    character: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 }
 
 const CampaignModel = mongoose.model('Campaign', CampaignSchema)

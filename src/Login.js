@@ -94,7 +94,7 @@ class Login extends React.Component {
         .then((json) => {
           // Si se ha creado el usuario, navegamos a la siguiente pantalla
           if(json['success']){
-            this.props.history.push('/sgm/'+this.state.username)
+            this.props.history.push('/sgm/'+json['id'])
             this.handleClose()
           }else{
             // En caso contrario, mostramos el error correspondiente por pantalla
@@ -131,7 +131,7 @@ class Login extends React.Component {
         .then((json) => {
           // Si es valido, nos movemos a la siguiente pantalla
           if(json['success']){
-            this.props.history.push('/sgm/'+this.state.username)
+            this.props.history.push('/sgm/'+json['id'])
             console.log('Successful login')
           }else{
             console.log('Failed login')

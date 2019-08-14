@@ -23,11 +23,8 @@ class SelectGameMode extends React.Component {
         this.handleCode = this.handleCode.bind(this);
         this.handleNewCharacter = this.handleNewCharacter.bind(this);
         this.state = {
-            directing: [ // Lista de partidas que el jugador esta dirigiendo
-                'Tariel',
-                'Middle Earth'
-            ],
-            playing: [],
+            directing: [],// Lista de partidas que el jugador esta dirigiendo
+            playing: [],// Lista de partidas que el jugador esta jugando
             toDirect: '', // Partida seleccionada para dirigir
             toPlay: '', // Partida seleccionada para jugar
             open: false,
@@ -38,7 +35,8 @@ class SelectGameMode extends React.Component {
     }
 
     componentDidMount() {
-        var data = {'username': this.props.match.params.username}
+        var data = {'dm': this.props.match.params.id}
+        console.log(data)
         fetch(serverAddress + '/get-directing-campaign', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -51,12 +49,35 @@ class SelectGameMode extends React.Component {
         .then((json) => {
             this.setState({directing: json})
         })
+
+        data = {'user': this.props.match.params.id}
+
+        fetch(serverAddress + '/get-playing-character', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .catch(error => console.error('Error: ', error))
+        .then((json) => {
+            this.setState({playing: json})
+        })
     }
 
     renderOptions(array) {
         return array.map((game, index) => {
             return (
                 <option key={index} value={game.world}>{game.world} - {game.title}</option>
+            )
+        })
+    }
+
+    renderCharacters(array) {
+        return array.map((char, index) => {
+            return (
+                <option key={index} value={char.world}>{char.data.name} - {char.campaign}</option>
             )
         })
     }
@@ -106,7 +127,7 @@ class SelectGameMode extends React.Component {
         .catch(error => console.error('Error: ', error))
         .then((json) => {
             if (json['success']) {
-                this.navigate('/cch/' + this.props.match.params.username + '/' + this.state.code)
+                this.navigate('/cch/' + this.props.match.params.id + '/' + json['id'])
                 this.handleClose()
             } else {
                 // En caso contrario, mostramos el error correspondiente por pantalla
@@ -139,7 +160,7 @@ class SelectGameMode extends React.Component {
                     </div>
 
                     <div className='continue-button'>
-                        <GreenFab variant="extended" onClick={() => this.navigate('/create-campaign/' + this.props.match.params.username)}>
+                        <GreenFab variant="extended" onClick={() => this.navigate('/create-campaign/' + this.props.match.params.id)}>
                             <Create style={{ paddingRight: 10 }} />
                             Create a new Adventure
                         </GreenFab>
@@ -153,7 +174,7 @@ class SelectGameMode extends React.Component {
                     </div>
                     <div className="menu-select">
                         <select className="select" onChange={this.onChangePlaying}>
-                            {this.renderOptions(this.state.playing)}
+                            {this.renderCharacters(this.state.playing)}
                         </select>
                         <PurpleFab variant="extended">
                             Continue

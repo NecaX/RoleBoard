@@ -64,10 +64,10 @@ app.post('/signup', (req, res) => {
       // En caso negativo, lo creamos
       console.log(`Adding new player to database: ${username}`)
       var newUser = new User({id: username, pass: req.body['pass']})
-      newUser.save(function(err, res){
+      newUser.save(function(err, userResult){
         if(err) throw err;
       })
-      res.send({'success': true})
+      res.send({'success': true, 'id': newUser._id})
     }else{
       // En caso afirmativo, lo comunicamos
       res.send({'success': false})
@@ -89,7 +89,7 @@ app.post('/login', (req, res) => {
     if(result == null){
       res.send({'success': false})
     }else{
-      res.send({'success': true})
+      res.send({'success': true, 'id': result._id})
     }
   })
   
@@ -110,7 +110,7 @@ app.post('/check-campaign', (req, res) => {
     if(result == null){
       res.send({'success': false})
     }else{
-      res.send({'success': true})
+      res.send({'success': true, 'id': result._id})
     }
   })
   
@@ -120,9 +120,7 @@ app.post('/check-campaign', (req, res) => {
  * Control de existencia de partida
  */
 app.post('/get-directing-campaign', (req, res) => {
-  var username =  req.body['username']
-  var query = {'dm': username};
-
+  var query = req.body
   // Comprobamos que exista una aventura con ese nombre
   // Y comunicamos el resultado
   CampaignModel.find(query, function(err, result) {
@@ -140,7 +138,33 @@ app.post('/get-directing-campaign', (req, res) => {
       res.json(response)
     }
   })
-  
+})
+
+/*
+ * Control de existencia de partida
+ */
+app.post('/get-playing-character', (req, res) => {
+  var query = req.body
+  // Comprobamos que exista una aventura con ese nombre
+  // Y comunicamos el resultado
+  CharacterModel.find(query)
+  .populate('campaign')
+  .exec(function(err, result)
+  {
+    if (err) throw err;
+    if(result == null){
+      res.send({'success': false})
+    }else{
+      var response = []
+      result.map((elem, index) => {
+        var character = {}
+        character.data = elem.general
+        character.campaign = elem.campaign.title
+        response.push(character)
+      })
+      res.json(response)
+    }
+  })
 })
 
 // SET IMAGE STORAGE WITH MULTER

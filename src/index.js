@@ -21,9 +21,9 @@ ReactDOM.render(
         <HashRouter>
             <div >
                 <Route path="/" exact     component={ Login } />
-                <Route path="/sgm/:username/"  component={ SelectGameMode } />
-                <Route path="/cch/:username/:code"  component={ CreateCharacter } />
-                <Route path="/create-campaign/:username"  component={ CreateCampaign } />
+                <Route path="/sgm/:id/"  component={ SelectGameMode } />
+                <Route path="/cch/:id/:code"  component={ CreateCharacter } />
+                <Route path="/create-campaign/:id"  component={ CreateCampaign } />
                 <Route path="/app/:username/:password"  component={ App } />
             </div>
         </HashRouter>

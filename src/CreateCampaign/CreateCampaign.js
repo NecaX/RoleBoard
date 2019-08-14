@@ -18,11 +18,12 @@ class CreateCampaign extends React.Component {
       summary: '',
       maxPlayers: 4,
       pass: '',
-      dm: this.props.match.params.username,
+      dm: this.props.match.params.id,
     }
   }
 
   componentDidMount() {
+    console.log(this.props.match.params.id)
     fetch(serverAddress + '/generate-code', {
       method: 'GET',
     })

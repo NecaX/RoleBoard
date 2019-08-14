@@ -108,7 +108,7 @@ class CreateCharacter extends React.Component {
             })
         }else {
             this.saveCharacter()
-            this.props.history.push('/sgm/'+this.props.match.params.username)
+            this.props.history.push('/sgm/'+this.props.match.params.id)
         }
     }
 
@@ -124,7 +124,7 @@ class CreateCharacter extends React.Component {
         character.featsSelected = [...this.state.feats.featsSelected]
         character.skillsSelected = this.state.skills.skillsSelected
         character.campaign = this.props.match.params.code
-        character.username = this.props.match.params.username
+        character.user = this.props.match.params.id
 
         fetch(`${serverAddress}/create-character`, {
             method: 'POST', 
