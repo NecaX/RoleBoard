@@ -17,108 +17,90 @@ class CharacterClass extends React.Component {
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
+                    ability: 'Strength',
+                    skillRanks: 4,
                 },
                 {
                     icon: wiz,
                     name: 'Wizard',
                     dice: 'd6',
                     role: 'Range fighter, talkative',
-                    ability: 'Intelligence'
+                    ability: 'Intelligence',
+                    skillRanks: 2,
                 },
                 {
                     icon: bard,
                     name: 'Bard',
                     dice: 'd8',
                     role: 'Support, very talkative',
-                    ability: 'Charisma'
+                    ability: 'Charisma',
+                    skillRanks: 6,
                 },
                 {
                     icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
+                    ability: 'Strength',
+                    skillRanks: 4,
                 },
                 {
                     icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
+                    ability: 'Strength',
+                    skillRanks: 4,
                 },
                 {
                     icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
+                    ability: 'Strength',
+                    skillRanks: 4,
                 },
                 {
                     icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
+                    ability: 'Strength',
+                    skillRanks: 4,
+                },
+
+                {
+                    icon: barb,
+                    name: 'Barbarian',
+                    dice: 'd12',
+                    role: 'Physical fighter, not talkative',
+                    ability: 'Strength',
+                    skillRanks: 4,
                 },
                 {
                     icon: barb,
                     name: 'Barbarian',
                     dice: 'd12',
                     role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
-                },
-                {
-                    icon: barb,
-                    name: 'Barbarian',
-                    dice: 'd12',
-                    role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
-                },
-                {
-                    icon: barb,
-                    name: 'Barbarian',
-                    dice: 'd12',
-                    role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
-                },
-                {
-                    icon: barb,
-                    name: 'Barbarian',
-                    dice: 'd12',
-                    role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
-                },
-                {
-                    icon: barb,
-                    name: 'Barbarian',
-                    dice: 'd12',
-                    role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
-                },
-                {
-                    icon: barb,
-                    name: 'Barbarian',
-                    dice: 'd12',
-                    role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
-                },
-                {
-                    icon: barb,
-                    name: 'Barbarian',
-                    dice: 'd12',
-                    role: 'Physical fighter, not talkative',
-                    ability: 'Strength'
+                    ability: 'Strength',
+                    skillRanks: 4,
                 },
             ]
         }
+    }
+
+    chooseClass(icon, name, index, skillRanks) {
+        this.props.modifyFunction('name', icon)
+        this.props.modifyFunction('icon', name)
+        this.props.modifyFunction('chosen', index)
+        this.props.modifyFunction('skillRanks', skillRanks)
     }
 
     renderOptions(array) {
 
         return array.map((charclass, index) => {
             return (
-                <tr key={index} onClick={() => this.props.modifyFunction(charclass['icon'], charclass['name'], index)}>
+                <tr key={index} onClick={() => this.chooseClass(charclass['icon'], charclass['name'], index, charclass['skillRanks'])}>
                     <td style={{flexGrow: 1}}><Avatar src={charclass['icon']} /></td>
                     <td style={{flexGrow: 2}}>{charclass['name']}</td>
                     <td style={{flexGrow: 1}}>{charclass['dice']}</td>

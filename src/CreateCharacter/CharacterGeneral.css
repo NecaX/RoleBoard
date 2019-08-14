@@ -79,7 +79,7 @@ input[type=file] {
   }
 
   .card-selected {
-    background-color: #304385;
+    background-color: #304385 !important;
     color: white;
   }
 

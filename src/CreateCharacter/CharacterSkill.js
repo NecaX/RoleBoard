@@ -90,6 +90,11 @@ class CharacterSkill extends React.Component {
             bonusMod: newBonus,
             charMod: newCharMod
         })
+
+        if(this.props.data.pointsLeft == -1) {
+            this.props.modifyFunction('pointsLeft', this.props.skillRanks + newCharMod['Intelligence'])
+        }
+        
     }
 
 

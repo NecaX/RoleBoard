@@ -37,6 +37,7 @@ class CreateCharacter extends React.Component {
                 name: '',
                 icon: null,
                 chosen: -1,
+                skillRanks: 0,
             },
             race: {
                 name: '',
@@ -69,11 +70,10 @@ class CreateCharacter extends React.Component {
             feats: {
                 featsLeft: 2,
                 featsSelected: new Set([]),
-                maxRank: 5,
             },
             skills: {
                 skillsSelected: {},
-                pointsLeft: 10,
+                pointsLeft: -1,
                 maxRank: 5,
             },
         }
@@ -142,7 +142,7 @@ class CreateCharacter extends React.Component {
             case 0:
                 return <CharacterGeneral modifyFunction={(key, value) => {this.modifyState('general', key, value)}} data={this.state.general} />
             case 1:
-                return <CharacterClass modifyFunction={(newIcon, newName, index) => this.modifyExtendedState('class', newIcon, newName, index)} data={this.state.class} />
+                return <CharacterClass modifyFunction={(key, value) => this.modifyState('class', key, value)} data={this.state.class} />
             case 2:
                 return <CharacterRace modifyFunction={(key, value) => {this.modifyState('race', key, value)}} data={this.state.race} />
             case 3:
@@ -150,7 +150,7 @@ class CreateCharacter extends React.Component {
             case 4:
                 return <CharacterFeat modifyFunction={(key, value) => {this.modifyState('feats', key, value)}} data={this.state.feats} />
             case 5:
-                return <CharacterSkill abilities={this.state.race.abilities} feats={this.state.feats.featsSelected} data={this.state.skills} modifyFunction={(key, value) => {this.modifyState('skills', key, value)}} />
+                return <CharacterSkill skillRanks={this.state.class.skillRanks} abilities={this.state.race.abilities} feats={this.state.feats.featsSelected} data={this.state.skills} modifyFunction={(key, value) => {this.modifyState('skills', key, value)}} />
             case 6:
                 return <CharacterSummary general={this.state.general} class={this.state.class} race={this.state.race} primweapon={this.state.primweapon} secweapon={this.state.secweapon} featsList={this.state.feats.featsSelected} skillList={this.state.skills.skillsSelected} />
             default:
