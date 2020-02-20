@@ -22,11 +22,12 @@ class SelectGameMode extends React.Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleCode = this.handleCode.bind(this);
         this.handleNewCharacter = this.handleNewCharacter.bind(this);
+        this.goToDashboard = this.goToDashboard.bind(this);
         this.state = {
             directing: [],// Lista de partidas que el jugador esta dirigiendo
             playing: [],// Lista de partidas que el jugador esta jugando
-            toDirect: '', // Partida seleccionada para dirigir
-            toPlay: '', // Partida seleccionada para jugar
+            toDirect: 0, // Partida seleccionada para dirigir
+            toPlay: 0, // Partida seleccionada para jugar
             open: false,
             code: '',
             codeExists: true,
@@ -140,6 +141,11 @@ class SelectGameMode extends React.Component {
         
     }
 
+    goToDashboard(){
+        console.log(this.state.directing[this.state.toDirect].id)
+        this.navigate('/campaign-dashboard/' + this.state.directing[this.state.toDirect].id)
+    }
+
     render() {
         return (
             <div className="container">
@@ -151,7 +157,7 @@ class SelectGameMode extends React.Component {
                         <select className="select" onChange={this.onChangeDirecting}>
                             {this.renderOptions(this.state.directing)}
                         </select>
-                        <PurpleFab variant="extended" >
+                        <PurpleFab variant="extended" onClick={this.goToDashboard} >
                             Continue
                         </PurpleFab>
                     </div>

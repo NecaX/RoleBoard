@@ -1,0 +1,87 @@
+.campaign-dashboard-container {
+    height: 100vmin;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-family: 'Luminari';
+}
+
+.campaign-dashboard-info {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.campaign-dashboard-lists {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 35%;
+
+}
+
+.campaign-dashboard-data {
+    display: flex;
+    justify-content: space-evenly;
+    height: 80%;
+}
+
+.campaign-dashboard-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 20%;
+}
+
+.campaign-dashboard-card{
+    background-color: #fff;
+    border-radius: 10px;
+} 
+
+.campaign-dashboard-title{
+    padding: 2%;
+    font-size: 200%;
+}
+
+.campaign-dashboard-summary{
+    padding: 2%;
+    font-size: 110%;
+    text-align: justify;
+}
+
+.campaign-dashboard-next{
+    padding: 2%;
+    font-size: 175%;
+    margin-left: 5%;
+}
+
+.campaign-dashboard-chapters {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: #fff;
+    height: 45%;
+}
+
+.campaign-dashboard-players {
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    background-color: #fff;
+    height: 35%;
+}
+
+.campaign-dashboard-chapters tr td {
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.campaign-dashboard-button {
+    position: fixed;
+    bottom: 35px;
+    right: 35px;
+}
+

@@ -133,6 +133,7 @@ app.post('/get-directing-campaign', (req, res) => {
         var game = {}
         game.title = elem.title
         game.world = elem.world
+        game.id = elem._id
         response.push(game)
       })
       res.json(response)

@@ -8,6 +8,7 @@ import App from './App';
 import SelectGameMode from './SelectGameMode';
 import CreateCharacter from './CreateCharacter/CreateCharacter';
 import CreateCampaign from './CreateCampaign/CreateCampaign';
+import CampaignDashboard from './CampaignDashboard/CampaignDashboard';
 
 
 import {
@@ -24,6 +25,7 @@ ReactDOM.render(
                 <Route path="/sgm/:id/"  component={ SelectGameMode } />
                 <Route path="/cch/:id/:code"  component={ CreateCharacter } />
                 <Route path="/create-campaign/:id"  component={ CreateCampaign } />
+                <Route path="/campaign-dashboard/:id"  component={ CampaignDashboard } />
                 <Route path="/app/:username/:password"  component={ App } />
             </div>
         </HashRouter>
